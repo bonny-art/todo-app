@@ -5,32 +5,36 @@ import todoController from '../../controllers/todo.controller';
 import validateBody from '@/middlewares/validateBody';
 import { createTodoSchema, updateTodoSchema } from '@/schemas/todosSchema';
 import { isExist } from '@/middlewares/isExist';
+import { tryCatchHandler } from '@/middlewares/tryCatch';
 
 const prisma = new PrismaClient();
 
 const todosRouter: Router = Router();
 
-todosRouter.get('/all', todoController.getAllTodo.bind(todoController));
+todosRouter.get(
+	'/all',
+	tryCatchHandler(todoController.getAllTodo.bind(todoController)),
+);
 todosRouter.get(
 	'/:id',
 	isExist(prisma.todo),
-	todoController.getTodo.bind(todoController),
+	tryCatchHandler(todoController.getTodo.bind(todoController)),
 );
 todosRouter.post(
 	'/new',
 	validateBody(createTodoSchema),
-	todoController.createTodo.bind(todoController),
+	tryCatchHandler(todoController.createTodo.bind(todoController)),
 );
 todosRouter.patch(
 	'/:id',
 	isExist(prisma.todo),
 	validateBody(updateTodoSchema),
-	todoController.updateTodo.bind(todoController),
+	tryCatchHandler(todoController.updateTodo.bind(todoController)),
 );
 todosRouter.delete(
 	'/:id',
 	isExist(prisma.todo),
-	todoController.deleteTodo.bind(todoController),
+	tryCatchHandler(todoController.deleteTodo.bind(todoController)),
 );
 
 export default todosRouter;
