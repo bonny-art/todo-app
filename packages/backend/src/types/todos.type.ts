@@ -3,6 +3,7 @@
 export type TodoCreateDataT = {
 	title: string;
 	description: string;
+	isPrivate: boolean;
 };
 
 export type TodoUpdateDataT = {

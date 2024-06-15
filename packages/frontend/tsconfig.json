@@ -42,6 +42,12 @@
 			],
 			"~/*": [
 				"src/*"
+			],
+			"~yup.schemas.ts/*": [
+				"src/shared/yup.schemas.ts/*"
+			],
+			"~yup.schemas/*": [
+				"src/shared/yup.schemas/*"
 			]
 		}
 	},

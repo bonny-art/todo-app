@@ -1,15 +1,18 @@
-import { PrismaClient, Todo } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const client = new PrismaClient();
 
 export default class TodoService {
 	async findAll(): Promise<Todo[]> {
-		const todos = await client.todo.findMany();
+		const todos = await client.todo.findMany({
+			orderBy: {
+				createdAt: 'asc',
+			},
+		});
 		return todos;
 	}
 
 	async findById(id: number): Promise<Todo | null> {
-		console.log('🚀 ~ id:', id);
 		const todo = await client.todo.findUnique({ where: { id: id } });
 		return todo;
 	}
@@ -17,13 +20,14 @@ export default class TodoService {
 	async createTodo(data: {
 		title: string;
 		description: string;
+		isPrivate: boolean;
 	}): Promise<Todo> {
 		const newTodo = await client.todo.create({
 			data: {
 				title: data.title,
 				description: data.description,
 				isCompleted: false,
-				isPrivate: false,
+				isPrivate: data.isPrivate,
 			},
 		});
 		return newTodo;
