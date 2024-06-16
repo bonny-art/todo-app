@@ -3,9 +3,10 @@ import React from 'react';
 import { ModalContainer } from '~shared/components/modal-container/modal-container';
 
 import TodoModalEdit from '../todo-modal-edit/todo-modal-edit';
-import { modalStyled } from './add-todo-modal.styled';
+import { closeButton, modalStyled } from './add-todo-modal.styled';
 import { addTodoT } from '~shared/types/todo.type';
 import { useTodoStore } from '~store/todo.store';
+import { IoClose } from 'react-icons/io5';
 
 export const AddTodoModal = ({ isModalOpen, closeModal }): React.ReactNode => {
 	const todoStore = useTodoStore();
@@ -20,8 +21,8 @@ export const AddTodoModal = ({ isModalOpen, closeModal }): React.ReactNode => {
 			{isModalOpen && (
 				<ModalContainer onClose={closeModal}>
 					<div className={modalStyled}>
-						<button onClick={closeModal}>
-							<p>close icon</p>
+						<button className={closeButton} onClick={closeModal}>
+							<IoClose />
 						</button>
 
 						<TodoModalEdit onSaveClick={handleSaveClick} />

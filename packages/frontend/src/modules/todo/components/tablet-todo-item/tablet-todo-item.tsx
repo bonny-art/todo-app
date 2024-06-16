@@ -35,6 +35,7 @@ const TabletTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 
 	const closeModal = (): void => {
 		setIsModalOpen(false);
+		todoStore.setIsEditedFalse();
 	};
 
 	return (
@@ -55,16 +56,9 @@ const TabletTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 
 						<Switch
 							onChange={onSwitchToggle}
-							className="bp5-align-right"
-							labelElement={'Mark done'}
+							className="bp5-align-right switch"
+							labelElement={'Complete'}
 							checked={todo.isCompleted}
-							style={{
-								marginBottom: '0',
-								fontSize: '24px',
-								display: 'flex',
-								flexDirection: 'row-reverse',
-								alignItems: 'baseline',
-							}}
 						></Switch>
 					</div>
 				</div>

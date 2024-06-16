@@ -4,7 +4,11 @@ import { useTodoStore } from '~store/todo.store';
 
 import { TodoModal } from '../todo-modal/todo-modal';
 import { Button, Card, Elevation, Switch } from '@blueprintjs/core';
-import { buttonsContainer, controlsContainer } from './mobile-todo-item.styled';
+import {
+	buttonsContainer,
+	cardStyled,
+	controlsContainer,
+} from './mobile-todo-item.styled';
 
 const MobileTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 	const todoStore = useTodoStore();
@@ -25,11 +29,16 @@ const MobileTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 
 	const closeModal = (): void => {
 		setIsModalOpen(false);
+		todoStore.setIsEditedFalse();
 	};
 
 	return (
 		<>
-			<Card interactive={true} elevation={Elevation.TWO}>
+			<Card
+				className={cardStyled}
+				interactive={true}
+				elevation={Elevation.TWO}
+			>
 				<h5>{todo.title}</h5>
 				<p>{todo.description}</p>
 				<div className={controlsContainer}>
@@ -41,7 +50,7 @@ const MobileTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 					<Switch
 						onChange={onSwitchToggle}
 						className="bp5-align-right"
-						labelElement={'Mark done'}
+						labelElement={'Complete'}
 						checked={todo.isCompleted}
 						style={{ marginBottom: '0' }}
 					></Switch>

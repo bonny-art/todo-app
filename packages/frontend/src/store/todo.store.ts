@@ -5,6 +5,11 @@ import * as todoApi from '~shared/services/todos.api';
 interface ITodoStore {
 	todos: TodoT[];
 	todo: TodoT;
+	isEdited: boolean;
+
+	setIsEditedTrue: () => void;
+	setIsEditedFalse: () => void;
+
 	getAllTodos: () => Promise<void>;
 	getTodo: (id: number) => Promise<void>;
 	addTodo: (todo: addTodoT) => Promise<void>;
@@ -16,6 +21,23 @@ export const useTodoStore = create<ITodoStore>((set) => {
 	return {
 		todos: [],
 		todo: {} as TodoT,
+		isEdited: false,
+
+		setIsEditedTrue: (): void => {
+			set(() => {
+				return {
+					isEdited: true,
+				};
+			});
+		},
+
+		setIsEditedFalse: (): void => {
+			set(() => {
+				return {
+					isEdited: false,
+				};
+			});
+		},
 
 		getAllTodos: async (): Promise<void> => {
 			const todos = await todoApi.getAllTodos();

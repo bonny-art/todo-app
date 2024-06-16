@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TodoPropsT } from '~shared/types/todo.type';
 import { useTodoStore } from '~store/todo.store';
-import { getToggleButtonStyle } from './desktop-todo-item.styled';
+
 import { TodoModal } from '../todo-modal/todo-modal';
+import { Button, Switch } from '@blueprintjs/core';
 
 const DesktopTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 	const todoStore = useTodoStore();
@@ -13,12 +14,6 @@ const DesktopTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 		todoStore.deleteTodo(todo.id);
 	};
 
-	const onCompletedToggle = (): void => {
-		todoStore.updateTodo(todo.id, { isCompleted: !todo.isCompleted });
-	};
-
-	const toggleButtonStyle = getToggleButtonStyle(todo.isCompleted);
-
 	const openModal = (): void => {
 		setIsModalOpen(true);
 	};
@@ -27,21 +22,31 @@ const DesktopTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 		setIsModalOpen(false);
 	};
 
+	const onSwitchToggle = (): void => {
+		todoStore.updateTodo(todo.id, { isCompleted: !todo.isCompleted });
+	};
+
 	return (
 		<>
-			<h2>{todo.title}</h2>
-			<p>{todo.description}</p>
-			<>
-				<button onClick={openModal}>View</button>
-				<button onClick={onDeleteClick}>Delete</button>
-				<button
-					className={toggleButtonStyle}
-					onClick={onCompletedToggle}
-				>
-					Completed
-				</button>
-			</>
-
+			<tr>
+				<td className="title-cell">{todo.title}</td>
+				<td className="description-cell">{todo.description}</td>
+				<td className="actions-cell">
+					<Button className="button" onClick={openModal}>
+						View
+					</Button>
+					<Button className="button" onClick={onDeleteClick}>
+						Delete
+					</Button>
+					<Switch
+						onChange={onSwitchToggle}
+						className="bp5-align-right switch"
+						labelElement={'Complete'}
+						checked={todo.isCompleted}
+						style={{ marginBottom: '0' }}
+					></Switch>
+				</td>
+			</tr>
 			<TodoModal
 				isModalOpen={isModalOpen}
 				closeModal={closeModal}

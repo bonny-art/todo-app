@@ -22,7 +22,6 @@ const MobileTodoContainer = ({ todos }: TodosPropsT): React.ReactNode => {
 
 	return (
 		<div className={todosContainerStyled}>
-			<div>MobileTodoContainer</div>
 			<Button onClick={openModal}>Add todo</Button>
 			<div className={listStyled}>
 				{todos.map((todo) => (

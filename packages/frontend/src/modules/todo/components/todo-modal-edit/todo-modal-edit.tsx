@@ -3,6 +3,14 @@ import { TodoModalEditProps, addTodoFormikT } from '~shared/types/todo.type';
 
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { todoValidationSchema } from '~shared/yup.schemas/yup.schemas';
+import {
+	container,
+	descriptionInput,
+	inputContainer,
+	radioInput,
+	titleInput,
+} from './todo-modal-edit.styled';
+import { Button } from '@blueprintjs/core';
 
 const TodoModalEdit = ({
 	todo,
@@ -18,6 +26,7 @@ const TodoModalEdit = ({
 		values: addTodoFormikT,
 		actions: FormikHelpers<addTodoFormikT>,
 	): void => {
+		console.log('🚀 ~ handle submit');
 		const newTodo = {
 			title: values.title,
 			description: values.description,
@@ -34,7 +43,7 @@ const TodoModalEdit = ({
 	};
 
 	return (
-		<div>
+		<div className={container}>
 			<Formik
 				initialValues={initialValues}
 				validationSchema={todoValidationSchema}
@@ -42,25 +51,39 @@ const TodoModalEdit = ({
 			>
 				{({ errors, touched }) => (
 					<Form>
-						<Field
-							name="title"
-							placeholder="Type your todo title"
-						/>
-						{touched.title && errors.title && (
-							<div className="error-styled">{errors.title}</div>
-						)}
+						<div className={inputContainer}>
+							<Field
+								as="textarea"
+								className={titleInput}
+								name="title"
+								placeholder="Type your todo title"
+							/>
+							{touched.title && errors.title && (
+								<div className="error-styled">
+									{errors.title}
+								</div>
+							)}
+						</div>
 
-						<Field
-							name="description"
-							placeholder="Type your todo description"
-						/>
-						{touched.description && errors.description && (
-							<div className="error-styled">
-								{errors.description}
-							</div>
-						)}
+						<div className={inputContainer}>
+							<Field
+								as="textarea"
+								className={descriptionInput}
+								name="description"
+								placeholder="Type your todo description"
+							/>
+							{touched.description && errors.description && (
+								<div className="error-styled">
+									{errors.description}
+								</div>
+							)}
+						</div>
 
-						<div role="group" aria-labelledby="my-radio-group">
+						<div
+							className={radioInput}
+							role="group"
+							aria-labelledby="my-radio-group"
+						>
 							<label>
 								<Field
 									type="radio"
@@ -79,7 +102,7 @@ const TodoModalEdit = ({
 							</label>
 						</div>
 
-						<button type="submit">Save</button>
+						<Button type="submit">Save</Button>
 					</Form>
 				)}
 			</Formik>
