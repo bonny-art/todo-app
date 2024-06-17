@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { TodoModalEditProps, addTodoFormikT } from '~shared/types/todo.type';
+import { TodoFormProps, addTodoFormikT } from '~shared/types/todo.type';
 
 import { Formik, Form, FormikHelpers } from 'formik';
 import { todoValidationSchema } from '~shared/yup.schemas/yup.schemas';
@@ -9,15 +9,12 @@ import {
 	inputContainer,
 	radioInput,
 	titleInput,
-} from './todo-modal-edit.styled';
+} from './todo-form.styled';
 import { Button } from '@blueprintjs/core';
 import { TextareaField } from '~shared/components/text-area-field/text-area-field';
 import { RadioInputGroup } from '~shared/components/radio-input-group/radio-input-group';
 
-const TodoModalEdit = ({
-	todo,
-	onSaveClick,
-}: TodoModalEditProps): React.ReactNode => {
+const TodoForm = ({ todo, onSaveClick }: TodoFormProps): React.ReactNode => {
 	const initialValues = useMemo(
 		() => ({
 			title: todo?.title || '',
@@ -92,4 +89,4 @@ const TodoModalEdit = ({
 	);
 };
 
-export default TodoModalEdit;
+export default TodoForm;

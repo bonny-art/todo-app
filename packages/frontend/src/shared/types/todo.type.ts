@@ -56,7 +56,7 @@ export type TodoModalShowProps = {
 	onUpdateClick: () => void;
 };
 
-export type TodoModalEditProps = {
+export type TodoFormProps = {
 	todo?: TodoT;
 	onSaveClick: (values: addTodoT, id?: number) => void;
 };

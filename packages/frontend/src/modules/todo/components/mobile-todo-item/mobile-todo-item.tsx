@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { TodoPropsT } from '~shared/types/todo.type';
+import { TodoPropsT, addTodoT } from '~shared/types/todo.type';
 import { useTodoStore } from '~store/todo.store';
 
-import { TodoModal } from '../todo-modal/todo-modal';
 import { Button, Card, Elevation, Switch } from '@blueprintjs/core';
 import {
 	buttonsContainer,
 	cardStyled,
 	controlsContainer,
 } from './mobile-todo-item.styled';
+import { Modal } from '~shared/components/modal/modal';
+import TodoForm from '../todo-form/todo-form';
+import TodoCard from '../todo-card/todo-card';
 
 const MobileTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 	const todoStore = useTodoStore();
+
+	const isEdited = todoStore.isEdited;
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -30,6 +34,15 @@ const MobileTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 	const closeModal = (): void => {
 		setIsModalOpen(false);
 		todoStore.setIsEditedFalse();
+	};
+
+	const handleSaveClick = (values: addTodoT, id: number): void => {
+		todoStore.updateTodo(id, values);
+		todoStore.setIsEditedFalse();
+	};
+
+	const handleUpdateClick = (): void => {
+		todoStore.setIsEditedTrue();
 	};
 
 	return (
@@ -57,11 +70,18 @@ const MobileTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
 				</div>
 			</Card>
 
-			<TodoModal
-				isModalOpen={isModalOpen}
-				closeModal={closeModal}
-				todo={todo}
-			/>
+			{isModalOpen && (
+				<Modal closeModal={closeModal}>
+					{isEdited ? (
+						<TodoForm todo={todo} onSaveClick={handleSaveClick} />
+					) : (
+						<TodoCard
+							todo={todo}
+							onUpdateClick={handleUpdateClick}
+						/>
+					)}
+				</Modal>
+			)}
 		</>
 	);
 };

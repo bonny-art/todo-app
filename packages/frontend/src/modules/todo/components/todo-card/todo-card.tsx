@@ -1,10 +1,10 @@
 import React from 'react';
 import { TodoModalShowProps } from '~shared/types/todo.type';
-import { container } from './todo-modal-show.styled';
+import { container } from './todo-card.styled';
 import { Button, Switch } from '@blueprintjs/core';
 import { useTodoStore } from '~store/todo.store';
 
-const TodoModalShow = ({
+const TodoCard = ({
 	todo,
 	onUpdateClick,
 }: TodoModalShowProps): React.ReactNode => {
@@ -44,4 +44,4 @@ const TodoModalShow = ({
 	);
 };
 
-export default TodoModalShow;
+export default TodoCard;

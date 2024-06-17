@@ -5,14 +5,18 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 
-import { TodosPropsT } from '~shared/types/todo.type';
+import { TodosPropsT, addTodoT } from '~shared/types/todo.type';
 
 import { buttonStyled, container } from './tablet-todo-container.styled';
 import TabletTodoItem from '../tablet-todo-item/tablet-todo-item';
 import { Button } from '@blueprintjs/core';
-import { AddTodoModal } from '../add-todo-modal/add-todo-modal';
+
+import { Modal } from '~shared/components/modal/modal';
+import TodoForm from '../todo-form/todo-form';
+import { useTodoStore } from '~store/todo.store';
 
 const TabletTodoContainer = ({ todos }: TodosPropsT): React.ReactNode => {
+	const todoStore = useTodoStore();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openModal = (): void => {
@@ -21,6 +25,11 @@ const TabletTodoContainer = ({ todos }: TodosPropsT): React.ReactNode => {
 
 	const closeModal = (): void => {
 		setIsModalOpen(false);
+	};
+
+	const handleSaveClick = (values: addTodoT): void => {
+		todoStore.addTodo(values);
+		closeModal();
 	};
 
 	return (
@@ -43,7 +52,11 @@ const TabletTodoContainer = ({ todos }: TodosPropsT): React.ReactNode => {
 				</Swiper>
 			</div>
 
-			<AddTodoModal isModalOpen={isModalOpen} closeModal={closeModal} />
+			{isModalOpen && (
+				<Modal closeModal={closeModal}>
+					<TodoForm onSaveClick={handleSaveClick} />
+				</Modal>
+			)}
 		</div>
 	);
 };
