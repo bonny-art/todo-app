@@ -15,11 +15,9 @@ import {
 } from './tablet-todo-item.styled';
 
 const TabletTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
-	console.log('🚀 ~ todo:', todo);
 	const todoStore = useTodoStore();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	console.log('🚀 ~ isModalOpen:', isModalOpen);
 
 	const onDeleteClick = (): void => {
 		todoStore.deleteTodo(todo.id);

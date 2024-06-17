@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TodoModalEditProps, addTodoFormikT } from '~shared/types/todo.type';
 
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import { todoValidationSchema } from '~shared/yup.schemas/yup.schemas';
 import {
 	container,
@@ -11,22 +11,26 @@ import {
 	titleInput,
 } from './todo-modal-edit.styled';
 import { Button } from '@blueprintjs/core';
+import { TextareaField } from '~shared/components/text-area-field/text-area-field';
+import { RadioInputGroup } from '~shared/components/radio-input-group/radio-input-group';
 
 const TodoModalEdit = ({
 	todo,
 	onSaveClick,
 }: TodoModalEditProps): React.ReactNode => {
-	const initialValues = {
-		title: todo?.title || '',
-		description: todo?.description || '',
-		visibility: todo?.isPrivate ? 'private' : 'public',
-	};
+	const initialValues = useMemo(
+		() => ({
+			title: todo?.title || '',
+			description: todo?.description || '',
+			visibility: todo?.isPrivate ? 'private' : 'public',
+		}),
+		[todo],
+	);
 
 	const handleSubmit = (
 		values: addTodoFormikT,
 		actions: FormikHelpers<addTodoFormikT>,
 	): void => {
-		console.log('🚀 ~ handle submit');
 		const newTodo = {
 			title: values.title,
 			description: values.description,
@@ -52,55 +56,33 @@ const TodoModalEdit = ({
 				{({ errors, touched }) => (
 					<Form>
 						<div className={inputContainer}>
-							<Field
-								as="textarea"
+							<TextareaField
 								className={titleInput}
 								name="title"
 								placeholder="Type your todo title"
+								errors={errors}
+								touched={touched}
 							/>
-							{touched.title && errors.title && (
-								<div className="error-styled">
-									{errors.title}
-								</div>
-							)}
 						</div>
 
 						<div className={inputContainer}>
-							<Field
-								as="textarea"
+							<TextareaField
 								className={descriptionInput}
 								name="description"
 								placeholder="Type your todo description"
+								errors={errors}
+								touched={touched}
 							/>
-							{touched.description && errors.description && (
-								<div className="error-styled">
-									{errors.description}
-								</div>
-							)}
 						</div>
 
-						<div
+						<RadioInputGroup
 							className={radioInput}
-							role="group"
-							aria-labelledby="my-radio-group"
-						>
-							<label>
-								<Field
-									type="radio"
-									name="visibility"
-									value="public"
-								/>
-								Public
-							</label>
-							<label>
-								<Field
-									type="radio"
-									name="visibility"
-									value="private"
-								/>
-								Private
-							</label>
-						</div>
+							name="visibility"
+							options={[
+								{ label: 'Public', value: 'public' },
+								{ label: 'Private', value: 'private' },
+							]}
+						/>
 
 						<Button type="submit">Save</Button>
 					</Form>

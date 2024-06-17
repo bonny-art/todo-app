@@ -60,3 +60,28 @@ export type TodoModalEditProps = {
 	todo?: TodoT;
 	onSaveClick: (values: addTodoT, id?: number) => void;
 };
+
+export type FieldProps = {
+	className: string;
+	name: string;
+	placeholder: string;
+	errors: { [key: string]: string };
+	touched: { [key: string]: boolean };
+};
+
+export type RadioOption = {
+	label: string;
+	value: string;
+};
+
+export type RadioInputGroupProps = {
+	name: string;
+	options: RadioOption[];
+	className?: string;
+};
+
+export type RadioFieldProps = {
+	name: string;
+	value: string;
+	label: string;
+};
