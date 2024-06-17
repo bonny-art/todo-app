@@ -1,4 +1,4 @@
-export const ROUTER_KEYS = {
+export const API_CONFIG = {
 	BASE_URL: 'http://localhost:3030/api',
 	TODOS_ENDPOINT: '/todos',
 };
