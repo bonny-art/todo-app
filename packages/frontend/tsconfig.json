@@ -42,6 +42,9 @@
 			],
 			"~/*": [
 				"src/*"
+			],
+			"~fonts/*": [
+				"src/assets/fonts/*"
 			]
 		}
 	},
