@@ -1,8 +1,14 @@
 import { PrismaClient, User } from '@prisma/client';
+import bcryptjs from 'bcryptjs';
 
 const client = new PrismaClient();
 
 export default class UserService {
+	async findById(id: number): Promise<User | null> {
+		const user = await client.user.findUnique({ where: { id } });
+		return user;
+	}
+
 	async findByEmail(email: string): Promise<User | null> {
 		const user = await client.user.findUnique({ where: { email } });
 		return user;
@@ -17,13 +23,29 @@ export default class UserService {
 		return user;
 	}
 
+	async findByRecoveryToken(
+		passwordRecoveryToken: string,
+	): Promise<User | null> {
+		const user = await client.user.findFirst({
+			where: { passwordRecoveryToken },
+		});
+		return user;
+	}
+
+	async findByJwtToken(token: string): Promise<User | null> {
+		const user = await client.user.findFirst({
+			where: { token },
+		});
+		return user;
+	}
+
 	async updateUser(
 		id: number,
 		data: {
 			verificationToken?: string;
 			verify?: boolean;
 			passwordRecoveryToken?: string;
-			isPasswordVerified?: boolean;
+			password?: string;
 		},
 	): Promise<User> {
 		const updatedUser = await client.user.update({
@@ -35,37 +57,13 @@ export default class UserService {
 		return updatedUser;
 	}
 
-	// async findAll(): Promise<Todo[]> {
-	// 	const todos = await client.todo.findMany({
-	// 		orderBy: {
-	// 			createdAt: 'asc',
-	// 		},
-	// 	});
-	// 	return todos;
-	// }
-
-	// async updateTodo(
-	// 	id: number,
-	// 	data: {
-	// 		title?: string;
-	// 		description?: string;
-	// 		isCompleted?: boolean;
-	// 		isPrivate?: boolean;
-	// 	},
-	// ): Promise<Todo> {
-	// 	const updatedTodo = await client.todo.update({
-	// 		where: { id },
-	// 		data: {
-	// 			...data,
-	// 		},
-	// 	});
-	// 	return updatedTodo;
-	// }
-
-	// async deleteTodo(id: number): Promise<Todo> {
-	// 	const deletedTodo = await client.todo.delete({
-	// 		where: { id },
-	// 	});
-	// 	return deletedTodo;
-	// }
+	async isPasswordValid(
+		password: string,
+		hashedPassword: string,
+	): Promise<boolean> {
+		const isValid = await bcryptjs.compare(password, hashedPassword);
+		return isValid;
+	}
 }
+
+export const userService = new UserService();

@@ -118,7 +118,7 @@ export const passwordRecovery = (path: string): string => {
   li {
     margin-bottom: 5px;
   }
-  .confirm-button {
+  .reset-button {
     display: inline-block;
     padding: 10px 20px;
     margin-top: 20px;

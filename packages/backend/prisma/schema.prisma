@@ -22,7 +22,6 @@ model User {
   verificationToken       String
   verify                  Boolean
   passwordRecoveryToken   String
-  isPasswordVerified      Boolean
   todos Todo[]
 }
 
