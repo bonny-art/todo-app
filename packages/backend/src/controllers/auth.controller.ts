@@ -78,11 +78,13 @@ export class AuthController {
 
 		const user: User = req.user as User;
 
-		if (!user) {
+		if (!user.id) {
 			throw HttpError(404, 'User not found');
 		}
 
-		const loggedInUser = await this.authService.loginUser(user);
+		const id = user.id;
+
+		const loggedInUser = await this.authService.loginUser(id);
 
 		res.send({
 			token: loggedInUser.token,

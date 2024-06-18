@@ -40,11 +40,11 @@ export default class AuthService {
 		return hashedPassword;
 	}
 
-	async loginUser(user: User): Promise<User> {
-		const token = await this.createToken(user.id);
+	async loginUser(id: number): Promise<User> {
+		const token = await this.createToken(id);
 
 		const loggedInUser = await client.user.update({
-			where: { id: user.id },
+			where: { id },
 			data: {
 				token,
 			},
