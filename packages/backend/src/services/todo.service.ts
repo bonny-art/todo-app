@@ -21,6 +21,7 @@ export default class TodoService {
 		title: string;
 		description: string;
 		isPrivate: boolean;
+		userId: number;
 	}): Promise<Todo> {
 		const newTodo = await client.todo.create({
 			data: {
@@ -28,6 +29,7 @@ export default class TodoService {
 				description: data.description,
 				isCompleted: false,
 				isPrivate: data.isPrivate,
+				userId: data.userId,
 			},
 		});
 		return newTodo;
