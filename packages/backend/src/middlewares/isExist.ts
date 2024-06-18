@@ -1,3 +1,4 @@
+import HttpError from '@/helpers/HttpError';
 import { PrismaModelT } from '@/types/prisma.type';
 import { Request, Response, NextFunction } from 'express';
 
@@ -11,25 +12,21 @@ export const isExist = <T>(model: PrismaModelT<T>) => {
 			const id = parseInt(req.params.id);
 
 			if (isNaN(id)) {
-				res.status(400).send({
-					error: 'Invalid request parameter: ID must be a number',
-				});
-				return;
+				throw HttpError(
+					400,
+					'Invalid request parameter: ID must be a number',
+				);
 			}
 
 			const item = await model.findUnique({ where: { id } });
 
 			if (!item) {
-				res.status(404).send({
-					error: `Item ${id} not found`,
-				});
+				throw HttpError(404, `Item ${id} not found`);
 			} else {
 				next();
 			}
 		} catch (error) {
-			res.status(500).send({
-				error: 'Server Error',
-			});
+			throw HttpError(500, 'Server Error');
 		}
 	};
 };

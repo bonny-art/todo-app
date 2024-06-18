@@ -29,7 +29,7 @@ export default class CreateEmailService {
 		};
 	}
 
-	public static makePasswordRecoveryLetter(
+	public static makeRecoveryEmail(
 		email: string,
 		token: string,
 	): EmailLetterT {

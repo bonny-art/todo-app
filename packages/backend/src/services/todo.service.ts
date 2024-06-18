@@ -13,7 +13,7 @@ export default class TodoService {
 	}
 
 	async findById(id: number): Promise<Todo | null> {
-		const todo = await client.todo.findUnique({ where: { id: id } });
+		const todo = await client.todo.findUnique({ where: { id } });
 		return todo;
 	}
 

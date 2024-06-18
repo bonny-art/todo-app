@@ -29,7 +29,6 @@ export default class AuthService {
 				verificationToken: data.verificationToken,
 				verify: false,
 				passwordRecoveryToken: '',
-				isPasswordVerified: false,
 			},
 		});
 		return newUser;
@@ -41,37 +40,38 @@ export default class AuthService {
 		return hashedPassword;
 	}
 
-	// async findAll(): Promise<Todo[]> {
-	// 	const todos = await client.todo.findMany({
-	// 		orderBy: {
-	// 			createdAt: 'asc',
-	// 		},
-	// 	});
-	// 	return todos;
-	// }
+	async loginUser(user: User): Promise<User> {
+		const token = await this.createToken(user.id);
 
-	// async updateTodo(
-	// 	id: number,
-	// 	data: {
-	// 		title?: string;
-	// 		description?: string;
-	// 		isCompleted?: boolean;
-	// 		isPrivate?: boolean;
-	// 	},
-	// ): Promise<Todo> {
-	// 	const updatedTodo = await client.todo.update({
-	// 		where: { id },
-	// 		data: {
-	// 			...data,
-	// 		},
-	// 	});
-	// 	return updatedTodo;
-	// }
+		const loggedInUser = await client.user.update({
+			where: { id: user.id },
+			data: {
+				token,
+			},
+		});
 
-	// async deleteTodo(id: number): Promise<Todo> {
-	// 	const deletedTodo = await client.todo.delete({
-	// 		where: { id },
-	// 	});
-	// 	return deletedTodo;
-	// }
+		return loggedInUser;
+	}
+
+	async updateUser(id: number, passwordRecoveryToken: string): Promise<User> {
+		const updatedUser = await client.user.update({
+			where: { id },
+			data: {
+				passwordRecoveryToken,
+			},
+		});
+
+		return updatedUser;
+	}
+
+	async logoutUser(id: number): Promise<string> {
+		await client.user.update({
+			where: { id },
+			data: {
+				token: '',
+			},
+		});
+
+		return '';
+	}
 }

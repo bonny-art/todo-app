@@ -6,9 +6,13 @@ export type UserCreateDataT = {
 	password: string;
 };
 
-// export type TodoUpdateDataT = {
-// 	title?: string;
-// 	description?: string;
-// 	isCompleted?: boolean;
-// 	isPrivate?: boolean;
-// };
+export type UserT = {
+	id: number;
+	name: string;
+	email: string;
+	password: string;
+	token: string;
+	verificationToken: string;
+	verify: boolean;
+	passwordRecoveryToken: string;
+};
