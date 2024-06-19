@@ -4,6 +4,7 @@ export type TodoCreateDataT = {
 	title: string;
 	description: string;
 	isPrivate: boolean;
+	userId: number;
 };
 
 export type TodoUpdateDataT = {

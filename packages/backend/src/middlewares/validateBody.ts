@@ -1,3 +1,4 @@
+import HttpError from '@/helpers/HttpError';
 import { Response, Request, NextFunction, RequestHandler } from 'express';
 import { Schema } from 'joi';
 
@@ -13,7 +14,7 @@ const validateBody = (schema: Schema): RequestHandler => {
 				.map((detail) => detail.message)
 				.join(', ');
 
-			res.status(400).json({ error: errorMessage });
+			throw HttpError(400, errorMessage);
 		} else {
 			next();
 		}

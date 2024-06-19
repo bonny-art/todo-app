@@ -12,8 +12,18 @@ export default class TodoService {
 		return todos;
 	}
 
+	async getAllTodosForUser(userId: number): Promise<Todo[]> {
+		const publicTodos = await client.todo.findMany({
+			where: { isPrivate: false },
+		});
+		const privateTodos = await client.todo.findMany({
+			where: { isPrivate: true, userId },
+		});
+		return [...publicTodos, ...privateTodos];
+	}
+
 	async findById(id: number): Promise<Todo | null> {
-		const todo = await client.todo.findUnique({ where: { id: id } });
+		const todo = await client.todo.findUnique({ where: { id } });
 		return todo;
 	}
 
@@ -21,6 +31,7 @@ export default class TodoService {
 		title: string;
 		description: string;
 		isPrivate: boolean;
+		userId: number;
 	}): Promise<Todo> {
 		const newTodo = await client.todo.create({
 			data: {
@@ -28,6 +39,7 @@ export default class TodoService {
 				description: data.description,
 				isCompleted: false,
 				isPrivate: data.isPrivate,
+				userId: data.userId,
 			},
 		});
 		return newTodo;
