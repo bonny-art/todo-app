@@ -1,6 +1,6 @@
 import { create } from 'zustand';
+import { todoService } from '~shared/services/todos.service';
 import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
-import * as todoApi from '~shared/services/todos.api';
 
 interface ITodoStore {
 	todos: TodoT[];
@@ -40,7 +40,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 		},
 
 		getAllTodos: async (): Promise<void> => {
-			const todos = await todoApi.getAllTodos();
+			const todos = await todoService.getAllTodos();
 
 			set(() => {
 				return {
@@ -50,7 +50,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 		},
 
 		getTodo: async (id: number): Promise<void> => {
-			const todo = await todoApi.getOneTodo(id);
+			const todo = await todoService.getOneTodo(id);
 			set(() => {
 				return {
 					todo,
@@ -59,7 +59,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 		},
 
 		addTodo: async (todo: addTodoT): Promise<void> => {
-			const newTodo = await todoApi.addTodo(todo);
+			const newTodo = await todoService.addTodo(todo);
 
 			set((state) => ({
 				todos: [...state.todos, newTodo],
@@ -70,7 +70,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 			id: number,
 			todoInfo: updateTodoT,
 		): Promise<void> => {
-			const updatedTodo = await todoApi.updateTodo(id, todoInfo);
+			const updatedTodo = await todoService.updateTodo(id, todoInfo);
 
 			set((state) => {
 				const updatedTodos = state.todos.map((todo) =>
@@ -83,7 +83,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 		},
 
 		deleteTodo: async (id: number): Promise<void> => {
-			await todoApi.deleteTodo(id);
+			await todoService.deleteTodo(id);
 
 			set((state) => {
 				return {
