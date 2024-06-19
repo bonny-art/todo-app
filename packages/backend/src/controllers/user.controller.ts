@@ -48,6 +48,22 @@ export class UserController {
 
 		res.send({ message: 'Password changed successfully' });
 	}
+
+	async changeName(req: Request, res: Response): Promise<void> {
+		const name = req.body.name;
+
+		if (!req.user) {
+			throw HttpError(404, 'User not found');
+		}
+
+		const user: User = req.user as User;
+
+		await userService.updateUser(user.id, {
+			name,
+		});
+
+		res.send({ message: 'Name changed successfully' });
+	}
 }
 
 const userController = new UserController(new AuthService(), new UserService());

@@ -6,6 +6,7 @@ import { requireAuth } from '@/middlewares/auth.middleware';
 import { tryCatchHandler } from '@/middlewares/tryCatch';
 import validateBody from '@/middlewares/validateBody';
 import {
+	changeNameSchema,
 	changePasswordSchema,
 	createUserSchema,
 	executeRecoverySchema,
@@ -54,6 +55,13 @@ router.patch(
 	requireAuth,
 	validateBody(changePasswordSchema),
 	tryCatchHandler(userController.changePassword.bind(userController)),
+);
+
+router.patch(
+	'/change-name',
+	requireAuth,
+	validateBody(changeNameSchema),
+	tryCatchHandler(userController.changeName.bind(userController)),
 );
 
 router.patch(
