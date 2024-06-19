@@ -20,6 +20,7 @@ export const userEndpoints = {
 	CHANGE_PASSWORD: `${ApiResources.USER}/change-password`,
 	LOGOUT: `${ApiResources.USER}/logout`,
 
+	USER: `${ApiResources.USER}/`,
 	UPDATE_USER: `${ApiResources.USER}/update`,
 } as const;
 

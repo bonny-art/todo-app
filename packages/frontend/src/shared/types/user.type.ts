@@ -1,3 +1,10 @@
+export type UserT = {
+	id: number;
+	name: string;
+	email: string;
+	emailVerified: boolean;
+};
+
 export type registerUserT = {
 	name: string;
 	email: string;
@@ -13,16 +20,16 @@ export type emailUserT = {
 	email: string;
 };
 
-export type responseUserT = {
+export type userWithTokenT = {
 	token: string;
-	user: loginUserT;
+	user: UserT;
 };
 
 export type messageT = {
 	message: string;
 };
 
-export type changeNameT = {
+export type NameUserT = {
 	name: string;
 };
 
