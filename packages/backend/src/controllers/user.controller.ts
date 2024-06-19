@@ -10,6 +10,16 @@ export class UserController {
 		private userService: UserService,
 	) {}
 
+	async getUser(req: Request, res: Response): Promise<void> {
+		if (!req.user) {
+			throw HttpError(404, 'User not found');
+		}
+
+		const user: User = req.user as User;
+
+		res.send({ name: user.name });
+	}
+
 	async changePassword(req: Request, res: Response): Promise<void> {
 		const oldPassword = req.body.oldPassword;
 		const newPassword = req.body.newPassword;
@@ -50,8 +60,6 @@ export class UserController {
 	}
 
 	async changeName(req: Request, res: Response): Promise<void> {
-		const name = req.body.name;
-
 		if (!req.user) {
 			throw HttpError(404, 'User not found');
 		}
@@ -59,7 +67,7 @@ export class UserController {
 		const user: User = req.user as User;
 
 		await userService.updateUser(user.id, {
-			name,
+			name: user.name,
 		});
 
 		res.send({ message: 'Name changed successfully' });

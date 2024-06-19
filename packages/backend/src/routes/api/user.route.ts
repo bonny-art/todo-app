@@ -21,11 +21,18 @@ const router: Router = Router();
 // @route   POST api/user
 // @desc    Register user given their email and password, returns the token upon successful registration
 // @access  Public
+router.get(
+	'/',
+	requireAuth,
+	tryCatchHandler(userController.getUser.bind(userController)),
+);
+
 router.post(
 	'/register',
 	validateBody(createUserSchema),
 	tryCatchHandler(authController.registerUser.bind(authController)),
 );
+
 router.patch(
 	'/verify/:verificationToken',
 	tryCatchHandler(authController.verificateUser.bind(authController)),
