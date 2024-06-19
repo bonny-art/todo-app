@@ -48,7 +48,19 @@ export class TodoController {
 	}
 
 	async createTodo(req: Request, res: Response): Promise<void> {
-		const data: TodoCreateDataT = req.body;
+		const user: User = req.user as User;
+
+		if (!user?.id) {
+			throw HttpError(404, 'User not found');
+		}
+
+		const userId = user.id;
+
+		const data: TodoCreateDataT = {
+			...req.body,
+			userId,
+		};
+
 		const todo = await this.todoService.createTodo(data);
 		res.send(todo);
 	}
