@@ -34,7 +34,7 @@ export class AuthController {
 			data.password,
 		);
 
-		await this.authService.createUser({
+		const newUser = await this.authService.createUser({
 			...data,
 			email: normalizedEmail,
 			verificationToken,
@@ -49,7 +49,10 @@ export class AuthController {
 		await sendEmailService.sendMail(letter);
 
 		res.send({
-			message: 'Verification email sent.',
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
 		});
 	}
 
@@ -63,12 +66,17 @@ export class AuthController {
 			throw HttpError(404, 'User not found');
 		}
 
-		await this.userService.updateUser(user.id, {
+		const newUser = await this.userService.updateUser(user.id, {
 			verify: true,
 			verificationToken: '',
 		});
 
-		res.send({ message: 'Verification successful' });
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
 	}
 
 	async loginUser(req: Request, res: Response): Promise<void> {
@@ -136,13 +144,16 @@ export class AuthController {
 
 		const hashedPassword = await this.authService.hashPassword(password);
 
-		await this.userService.updateUser(user.id, {
+		const newUser = await this.userService.updateUser(user.id, {
 			password: hashedPassword,
 			passwordRecoveryToken: '',
 		});
 
 		res.status(200).send({
-			message: 'Password changed successfully.',
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
 		});
 	}
 

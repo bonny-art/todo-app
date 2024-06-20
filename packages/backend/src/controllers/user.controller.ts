@@ -15,9 +15,14 @@ export class UserController {
 			throw HttpError(404, 'User not found');
 		}
 
-		const user: User = req.user as User;
+		const newUser: User = req.user as User;
 
-		res.send({ name: user.name });
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
 	}
 
 	async changePassword(req: Request, res: Response): Promise<void> {
@@ -52,11 +57,16 @@ export class UserController {
 
 		const hashedPassword = await this.authService.hashPassword(newPassword);
 
-		await userService.updateUser(user.id, {
+		const newUser = await userService.updateUser(user.id, {
 			password: hashedPassword,
 		});
 
-		res.send({ message: 'Password changed successfully' });
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
 	}
 
 	async changeName(req: Request, res: Response): Promise<void> {
@@ -66,11 +76,16 @@ export class UserController {
 
 		const user: User = req.user as User;
 
-		await userService.updateUser(user.id, {
+		const newUser = await userService.updateUser(user.id, {
 			name: user.name,
 		});
 
-		res.send({ message: 'Name changed successfully' });
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
 	}
 }
 
