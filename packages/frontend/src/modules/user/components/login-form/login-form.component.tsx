@@ -4,10 +4,7 @@ import React, { useState } from 'react';
 import { InputField } from '~shared/components/input-field/input-field';
 import { loginUserFormik } from '~shared/types/user.type';
 import { container, input, inputContainer } from './login-form.styled';
-import {
-	loginValidationSchema,
-	registerValidationSchema,
-} from '~shared/yup.schemas/user-yup.schemas';
+import { loginValidationSchema } from '~shared/yup.schemas/user-yup.schemas';
 
 import PasswordEyeButton from '~shared/components/password-eye-button/password-eye-button.component';
 import { useUserStore } from '~store/user.store';
