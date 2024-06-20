@@ -105,6 +105,7 @@ export class AuthController {
 
 	async sendRecoveryEmail(req: Request, res: Response): Promise<void> {
 		const { email } = req.body;
+
 		const normalizedEmail = email.toLowerCase();
 
 		const user = await this.userService.findByEmail(normalizedEmail);

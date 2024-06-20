@@ -1,14 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ROUTER_KEYS } from '~shared/keys';
+import ForgetPassword from './components/forget-password/forget-password.component';
 
 const ForgetPasswordPage = (): JSX.Element => {
-	return (
-		<>
-			<Link to={ROUTER_KEYS.REGISTER}>Register</Link>
-			<Link to={ROUTER_KEYS.LOGIN}>Login</Link>
-		</>
-	);
+	return <ForgetPassword />;
 };
 
 export default ForgetPasswordPage;
