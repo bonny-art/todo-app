@@ -2,8 +2,6 @@ import { css } from '@emotion/css';
 import { fonts } from '~shared/styles/fonts';
 
 export const container = css`
-	/* height: 364px; */
-
 	h2 {
 		width: calc(100% - 40px);
 		margin-bottom: 20px;
