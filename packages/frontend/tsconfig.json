@@ -43,8 +43,14 @@
 			"~/*": [
 				"src/*"
 			],
-			"~fonts/*": [
-				"src/assets/fonts/*"
+			"~components/*": [
+				"src/router/components/*"
+			],
+			"~user/*": [
+				"src/modules/user/*"
+			],
+			"~header/*": [
+				"src/modules/header/*"
 			]
 		}
 	},

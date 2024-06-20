@@ -2,7 +2,7 @@ export type UserT = {
 	id: number;
 	name: string;
 	email: string;
-	emailVerified: boolean;
+	verify: boolean;
 };
 
 export type registerUserT = {
