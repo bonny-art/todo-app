@@ -37,7 +37,7 @@ export type TodoPropsT = {
 
 export type ModalContainerProps = {
 	onClose: () => void;
-	children: React.ReactNode;
+	children: JSX.Element;
 };
 
 export type TodoModalProps = {
@@ -63,6 +63,7 @@ export type TodoFormProps = {
 
 export type FieldProps = {
 	className: string;
+	type?: 'text' | 'password';
 	name: string;
 	placeholder: string;
 	errors: { [key: string]: string };

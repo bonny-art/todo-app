@@ -4,10 +4,7 @@ import { container } from './todo-card.styled';
 import { Button, Switch } from '@blueprintjs/core';
 import { useTodoStore } from '~store/todo.store';
 
-const TodoCard = ({
-	todo,
-	onUpdateClick,
-}: TodoModalShowProps): React.ReactNode => {
+const TodoCard = ({ todo, onUpdateClick }: TodoModalShowProps): JSX.Element => {
 	const todoStore = useTodoStore();
 
 	const onToggleComplete = (): void => {

@@ -4,7 +4,7 @@ export const enum ROUTER_KEYS {
 	REGISTER = '/register',
 	VERIFY_EMAIL = '/verify-email/:token',
 	LOGIN = '/login',
-	FORGET_PASSWORD = 'forget-password',
+	FORGET_PASSWORD = '/forget-password',
 	RECOVER_PASSWORD = '/recover-password/:token',
 
 	DASHBOARD = '/todos',

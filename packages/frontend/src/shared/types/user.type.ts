@@ -13,7 +13,7 @@ export type registerUserT = {
 
 export type loginUserT = {
 	email: string;
-	name: string;
+	password: string;
 };
 
 export type emailUserT = {
@@ -36,4 +36,16 @@ export type NameUserT = {
 export type changePasswordT = {
 	oldPassword: string;
 	newPassword: string;
+};
+
+export type registerUserFormikT = {
+	name: string;
+	email: string;
+	password: string;
+	repeatPassword: string;
+};
+
+export type loginUserFormik = {
+	email: string;
+	password: string;
 };

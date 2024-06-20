@@ -50,6 +50,22 @@ export const useUserStore = create<IUserStore>((set) => {
 		},
 
 		loginUser: async (userInfo: loginUserT): Promise<void> => {
+			try {
+				const user = await userService.loginUser(userInfo);
+
+				set(() => {
+					return {
+						user: user.user,
+					};
+				});
+			} catch (error) {
+				set(() => {
+					return {
+						user: null,
+					};
+				});
+				alert('Invalid email or password');
+			}
 			const user = await userService.loginUser(userInfo);
 
 			set(() => {
@@ -75,7 +91,7 @@ export const useUserStore = create<IUserStore>((set) => {
 						isLoading: false,
 					};
 				});
-			} catch (err) {
+			} catch (error) {
 				set(() => {
 					return {
 						user: null,

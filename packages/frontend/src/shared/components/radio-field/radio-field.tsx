@@ -6,7 +6,7 @@ export const RadioField = ({
 	name,
 	value,
 	label,
-}: RadioFieldProps): React.ReactNode => (
+}: RadioFieldProps): JSX.Element => (
 	<label>
 		<Field type="radio" name={name} value={value} />
 		{label}
