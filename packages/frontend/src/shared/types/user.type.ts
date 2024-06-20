@@ -45,7 +45,17 @@ export type registerUserFormikT = {
 	repeatPassword: string;
 };
 
-export type loginUserFormik = {
+export type loginUserFormikT = {
 	email: string;
+	password: string;
+};
+
+export type recoverPasswordFormikT = {
+	password: string;
+	repeatPassword: string;
+};
+
+export type recoverPasswordT = {
+	token: string;
 	password: string;
 };

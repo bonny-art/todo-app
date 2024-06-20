@@ -7,6 +7,7 @@ import {
 	emailUserT,
 	loginUserT,
 	messageT,
+	recoverPasswordT,
 	registerUserT,
 	userWithTokenT,
 } from '~shared/types/user.type';
@@ -62,9 +63,12 @@ class UserService extends HttpSerivce {
 		return response.data;
 	}
 
-	async recoverPassword(token: string): Promise<UserT> {
+	async recoverPassword(userInfo: recoverPasswordT): Promise<UserT> {
+		const { token, password } = userInfo;
+
 		const response = await this.patch<UserT>({
 			url: userEndpoints.RECOVER(token),
+			data: { password },
 		});
 
 		return response.data;

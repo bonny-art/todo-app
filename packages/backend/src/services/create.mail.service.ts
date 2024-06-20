@@ -19,7 +19,7 @@ export default class CreateEmailService {
 		email: string,
 		token: string,
 	): EmailLetterT {
-		const path = `${FRONTEND_URL}/verification/${token}`;
+		const path = `${FRONTEND_URL}/verify-email/${token}`;
 		const content = this.makeVerificationEmailHtml(path);
 
 		return {
@@ -33,7 +33,7 @@ export default class CreateEmailService {
 		email: string,
 		token: string,
 	): EmailLetterT {
-		const path = `${FRONTEND_URL}/recovery/${token}`;
+		const path = `${FRONTEND_URL}/recover-password/${token}`;
 		const content = this.makeRecoveryEmailHtml(path);
 
 		return {

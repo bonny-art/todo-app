@@ -2,7 +2,7 @@ import { Button } from '@blueprintjs/core';
 import { Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
 import { InputField } from '~shared/components/input-field/input-field';
-import { loginUserFormik } from '~shared/types/user.type';
+import { loginUserFormikT } from '~shared/types/user.type';
 import { container, input, inputContainer } from './login-form.styled';
 import { loginValidationSchema } from '~shared/yup.schemas/user-yup.schemas';
 
@@ -24,8 +24,8 @@ const LoginForm = (): JSX.Element => {
 	};
 
 	const handleSubmit = (
-		values: loginUserFormik,
-		actions: FormikHelpers<loginUserFormik>,
+		values: loginUserFormikT,
+		actions: FormikHelpers<loginUserFormikT>,
 	): void => {
 		userStore.loginUser(values);
 

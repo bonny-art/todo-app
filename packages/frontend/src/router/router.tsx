@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { useUserStore } from '~store/user.store';
@@ -9,7 +9,7 @@ import { privateRoutes, publicRoutes } from './routes';
 const Router: React.FunctionComponent = () => {
 	const userStore = useUserStore();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		userStore.authByToken();
 	}, []);
 
