@@ -6,12 +6,14 @@ export type TodoT = {
 	isPrivate: boolean;
 	createdAt: string;
 	updatedAt: string;
+	userId: number;
 };
 
 export type addTodoT = {
 	title: string;
 	description: string;
 	isPrivate: boolean;
+	userID?: number;
 };
 
 export type addTodoFormikT = {

@@ -1,7 +1,7 @@
 import {
 	emailVerification,
 	passwordRecovery,
-} from '@/email.templates/email.templates';
+} from '@/email-templates/email-templates';
 import { EmailLetterT } from '@/types/auth.type';
 
 const { FRONTEND_URL } = process.env;

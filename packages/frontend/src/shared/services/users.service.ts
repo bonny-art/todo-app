@@ -1,4 +1,3 @@
-import { STORAGE_KEYS } from '~shared/keys';
 import { HttpSerivce } from './http.service';
 import {
 	NameUserT,
@@ -40,8 +39,6 @@ class UserService extends HttpSerivce {
 			url: userEndpoints.LOGIN,
 			data: userInfo,
 		});
-
-		localStorage.setItem(STORAGE_KEYS.TOKEN, response.data.token);
 
 		return response.data;
 	}
@@ -96,8 +93,6 @@ class UserService extends HttpSerivce {
 		await this.patch({
 			url: userEndpoints.LOGOUT,
 		});
-
-		localStorage.removeItem(STORAGE_KEYS.TOKEN);
 
 		return;
 	}

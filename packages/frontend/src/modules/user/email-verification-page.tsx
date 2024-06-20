@@ -27,4 +27,3 @@ const EmailVerificationPage = (): JSX.Element => {
 };
 
 export default EmailVerificationPage;
-// import { persist } from 'zustand/middleware';

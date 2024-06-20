@@ -8,7 +8,7 @@ export function PublicRoute(): JSX.Element {
 
 	return (
 		<>
-			{userStore.user && userStore.user.verify ? (
+			{userStore.user && userStore.user.verify && userStore.token ? (
 				<Navigate to={ROUTER_KEYS.DASHBOARD} />
 			) : (
 				<Suspense>

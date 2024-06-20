@@ -97,8 +97,10 @@ export class AuthController {
 		res.send({
 			token: loggedInUser.token,
 			user: {
-				email: loggedInUser.email,
+				id: loggedInUser.id,
 				name: loggedInUser.name,
+				email: loggedInUser.email,
+				verify: loggedInUser.verify,
 			},
 		});
 	}

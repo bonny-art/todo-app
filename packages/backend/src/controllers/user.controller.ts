@@ -70,6 +70,7 @@ export class UserController {
 	}
 
 	async changeName(req: Request, res: Response): Promise<void> {
+		const newName = req.body.name;
 		if (!req.user) {
 			throw HttpError(404, 'User not found');
 		}
@@ -77,7 +78,7 @@ export class UserController {
 		const user: User = req.user as User;
 
 		const newUser = await userService.updateUser(user.id, {
-			name: user.name,
+			name: newName,
 		});
 
 		res.send({

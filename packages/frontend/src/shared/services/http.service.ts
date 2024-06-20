@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { API_CONFIG } from '~shared/constants/server.constants';
+import { useUserStore } from '~store/user.store';
 
 export class HttpSerivce {
 	private baseUrl: string;
@@ -21,8 +22,9 @@ export class HttpSerivce {
 	}
 
 	private populateTokenToHeaderConfig(): { Authorization: string } {
+		const token = useUserStore.getState().token;
 		return {
-			Authorization: localStorage.getItem('token'),
+			Authorization: `Bearer ${token}`,
 		};
 	}
 

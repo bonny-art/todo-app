@@ -59,3 +59,18 @@ export type recoverPasswordT = {
 	token: string;
 	password: string;
 };
+
+export type ProfileCardProps = {
+	onUpdateClick: () => void;
+};
+
+export type ProfileFormProps = {
+	onSaveClick: () => void;
+};
+
+export type EditUserProfileFormikT = {
+	name: string;
+	oldPassword?: string;
+	newPassword?: string;
+	repeatPassword?: string;
+};

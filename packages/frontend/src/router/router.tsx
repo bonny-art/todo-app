@@ -5,6 +5,7 @@ import { useUserStore } from '~store/user.store';
 import { PrivateRoute } from './components/private-route.component';
 import { PublicRoute } from './components/public-route.component';
 import { privateRoutes, publicRoutes } from './routes';
+import { Header } from '~modules/header/header.component';
 
 const Router: React.FunctionComponent = () => {
 	const userStore = useUserStore();
@@ -15,7 +16,7 @@ const Router: React.FunctionComponent = () => {
 
 	return (
 		<BrowserRouter>
-			{/* <Header /> */}
+			<Header />
 			{userStore.isLoading ? (
 				<></>
 			) : (

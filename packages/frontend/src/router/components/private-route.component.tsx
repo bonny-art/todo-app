@@ -8,7 +8,7 @@ export function PrivateRoute(): JSX.Element {
 
 	return (
 		<>
-			{userStore.user && userStore.user.verify ? (
+			{userStore.user && userStore.user.verify && userStore.token ? (
 				<Suspense>
 					<Outlet />
 				</Suspense>
