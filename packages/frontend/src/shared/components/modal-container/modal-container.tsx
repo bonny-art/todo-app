@@ -6,7 +6,7 @@ import { ModalContainerProps } from '~shared/types/todo.type';
 export const ModalContainer = ({
 	onClose,
 	children,
-}: ModalContainerProps): React.ReactNode => {
+}: ModalContainerProps): JSX.Element => {
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
 		document.documentElement.style.overflow = 'hidden';

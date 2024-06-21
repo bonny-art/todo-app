@@ -7,7 +7,7 @@ import { Modal } from '~shared/components/modal/modal';
 import TodoForm from '../todo-form/todo-form';
 import TodoCard from '../todo-card/todo-card';
 
-const DesktopTodoItem = ({ todo }: TodoPropsT): React.ReactNode => {
+const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
 
 	const isEdited = todoStore.isEdited;

@@ -1,8 +1,6 @@
 import { EmailLetterT } from '@/types/auth.type';
 import nodemailer, { Transporter } from 'nodemailer';
 
-// META_PASSWORD,
-
 const { META_EMAIL, MAILTRAP_USER, MAILTRAP_PASS } = process.env;
 
 class SendEmailService {

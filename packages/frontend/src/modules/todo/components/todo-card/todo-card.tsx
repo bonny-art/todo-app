@@ -3,12 +3,13 @@ import { TodoModalShowProps } from '~shared/types/todo.type';
 import { container } from './todo-card.styled';
 import { Button, Switch } from '@blueprintjs/core';
 import { useTodoStore } from '~store/todo.store';
+import { useUserStore } from '~store/user.store';
 
-const TodoCard = ({
-	todo,
-	onUpdateClick,
-}: TodoModalShowProps): React.ReactNode => {
+const TodoCard = ({ todo, onUpdateClick }: TodoModalShowProps): JSX.Element => {
 	const todoStore = useTodoStore();
+	const userStore = useUserStore();
+
+	const isUpdatable = todo.userId === userStore.user.id;
 
 	const onToggleComplete = (): void => {
 		todoStore.updateTodo(todo.id, { isCompleted: !todo.isCompleted });
@@ -39,7 +40,7 @@ const TodoCard = ({
 				// style={{ marginBottom: '0' }}
 			></Switch>
 
-			<Button onClick={onUpdateClick}>Update</Button>
+			{isUpdatable && <Button onClick={onUpdateClick}>Update</Button>}
 		</div>
 	);
 };

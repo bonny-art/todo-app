@@ -23,3 +23,7 @@ export const changePasswordSchema = Joi.object({
 	oldPassword: Joi.string().required(),
 	newPassword: Joi.string().required(),
 });
+
+export const changeNameSchema = Joi.object({
+	name: Joi.string().max(24).required(),
+});

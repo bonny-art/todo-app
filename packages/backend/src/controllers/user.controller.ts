@@ -10,6 +10,21 @@ export class UserController {
 		private userService: UserService,
 	) {}
 
+	async getUser(req: Request, res: Response): Promise<void> {
+		if (!req.user) {
+			throw HttpError(404, 'User not found');
+		}
+
+		const newUser: User = req.user as User;
+
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
+	}
+
 	async changePassword(req: Request, res: Response): Promise<void> {
 		const oldPassword = req.body.oldPassword;
 		const newPassword = req.body.newPassword;
@@ -42,11 +57,36 @@ export class UserController {
 
 		const hashedPassword = await this.authService.hashPassword(newPassword);
 
-		await userService.updateUser(user.id, {
+		const newUser = await userService.updateUser(user.id, {
 			password: hashedPassword,
 		});
 
-		res.send({ message: 'Password changed successfully' });
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
+	}
+
+	async changeName(req: Request, res: Response): Promise<void> {
+		const newName = req.body.name;
+		if (!req.user) {
+			throw HttpError(404, 'User not found');
+		}
+
+		const user: User = req.user as User;
+
+		const newUser = await userService.updateUser(user.id, {
+			name: newName,
+		});
+
+		res.send({
+			id: newUser.id,
+			name: newUser.name,
+			email: newUser.email,
+			verify: newUser.verify,
+		});
 	}
 }
 

@@ -11,7 +11,7 @@ type IButtonProps = {
 	loading?: boolean;
 	disabled?: boolean;
 	extraButtonStyles?: string;
-	icon?: React.ReactNode;
+	icon?: JSX.Element;
 };
 
 const Button: React.FunctionComponent<IButtonProps> = ({

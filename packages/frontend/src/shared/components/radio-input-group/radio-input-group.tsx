@@ -7,7 +7,7 @@ export const RadioInputGroup = ({
 	name,
 	options,
 	className,
-}: RadioInputGroupProps): React.ReactNode => (
+}: RadioInputGroupProps): JSX.Element => (
 	<div className={className} role="group" aria-labelledby="my-radio-group">
 		{options.map((option) => (
 			<RadioField

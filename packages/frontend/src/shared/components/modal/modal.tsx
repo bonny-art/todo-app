@@ -6,7 +6,7 @@ import { IoClose } from 'react-icons/io5';
 import { ModalContainer } from '~shared/components/modal-container/modal-container';
 import { closeButton, modalStyled } from './modal.styled';
 
-export const Modal = ({ closeModal, children }): React.ReactNode => {
+export const Modal = ({ closeModal, children }): JSX.Element => {
 	return (
 		<>
 			{ReactDOM.createPortal(

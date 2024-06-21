@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { TodoFormProps, addTodoFormikT } from '~shared/types/todo.type';
 
 import { Formik, Form, FormikHelpers } from 'formik';
-import { todoValidationSchema } from '~shared/yup.schemas/yup.schemas';
+
 import {
 	container,
 	descriptionInput,
@@ -13,8 +13,12 @@ import {
 import { Button } from '@blueprintjs/core';
 import { TextareaField } from '~shared/components/text-area-field/text-area-field';
 import { RadioInputGroup } from '~shared/components/radio-input-group/radio-input-group';
+import { todoValidationSchema } from '~shared/yup.schemas/todo-yup.schemas';
+import { useUserStore } from '~store/user.store';
 
-const TodoForm = ({ todo, onSaveClick }: TodoFormProps): React.ReactNode => {
+const TodoForm = ({ todo, onSaveClick }: TodoFormProps): JSX.Element => {
+	const userStore = useUserStore();
+
 	const initialValues = useMemo(
 		() => ({
 			title: todo?.title || '',
@@ -32,6 +36,7 @@ const TodoForm = ({ todo, onSaveClick }: TodoFormProps): React.ReactNode => {
 			title: values.title,
 			description: values.description,
 			isPrivate: values.visibility === 'private' ? true : false,
+			...(todo ? {} : { userId: userStore.user.id }),
 		};
 
 		if (todo) {
