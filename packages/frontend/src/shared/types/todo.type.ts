@@ -88,3 +88,7 @@ export type RadioFieldProps = {
 	value: string;
 	label: string;
 };
+
+export type queryFormikT = {
+	searchQuery: string;
+};

@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import { TodoPropsT, addTodoT } from '~shared/types/todo.type';
 import { useTodoStore } from '~store/todo.store';
 
-import { Button, Card, Elevation, Switch } from '@blueprintjs/core';
-import {
-	buttonsContainer,
-	cardStyled,
-	controlsContainer,
-} from './mobile-todo-item.styled';
+import { Button, Switch } from '@blueprintjs/core';
 import { Modal } from '~shared/components/modal/modal';
-import TodoForm from '../todo-form/todo-form';
-import TodoCard from '../todo-card/todo-card';
+import TodoForm from '../todo-form/todo-form.component';
+import TodoCard from '../todo-card/todo-card.component';
 
-const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
+const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
 
 	const isEdited = todoStore.isEdited;
@@ -23,17 +18,16 @@ const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 		todoStore.deleteTodo(todo.id);
 	};
 
-	const onSwitchToggle = (): void => {
-		todoStore.updateTodo(todo.id, { isCompleted: !todo.isCompleted });
-	};
-
 	const openModal = (): void => {
 		setIsModalOpen(true);
 	};
 
 	const closeModal = (): void => {
 		setIsModalOpen(false);
-		todoStore.setIsEditedFalse();
+	};
+
+	const onSwitchToggle = (): void => {
+		todoStore.updateTodo(todo.id, { isCompleted: !todo.isCompleted });
 	};
 
 	const handleSaveClick = (values: addTodoT, id: number): void => {
@@ -47,28 +41,25 @@ const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 
 	return (
 		<>
-			<Card
-				className={cardStyled}
-				interactive={true}
-				elevation={Elevation.TWO}
-			>
-				<h5>{todo.title}</h5>
-				<p>{todo.description}</p>
-				<div className={controlsContainer}>
-					<div className={buttonsContainer}>
-						<Button onClick={openModal}>View</Button>
-						<Button onClick={onDeleteClick}>Delete</Button>
-					</div>
-
+			<tr>
+				<td className="title-cell">{todo.title}</td>
+				<td className="description-cell">{todo.description}</td>
+				<td className="actions-cell">
+					<Button className="button" onClick={openModal}>
+						View
+					</Button>
+					<Button className="button" onClick={onDeleteClick}>
+						Delete
+					</Button>
 					<Switch
 						onChange={onSwitchToggle}
-						className="bp5-align-right"
+						className="bp5-align-right switch"
 						labelElement={'Complete'}
 						checked={todo.isCompleted}
 						style={{ marginBottom: '0' }}
 					></Switch>
-				</div>
-			</Card>
+				</td>
+			</tr>
 
 			{isModalOpen && (
 				<Modal closeModal={closeModal}>
@@ -86,6 +77,6 @@ const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	);
 };
 
-export default MobileTodoItem;
+export default DesktopTodoItem;
 
 // segmented - control;

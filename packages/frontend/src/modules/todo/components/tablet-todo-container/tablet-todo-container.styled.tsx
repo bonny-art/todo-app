@@ -1,8 +1,19 @@
 import { css } from '@emotion/css';
 import { fonts } from '~shared/styles/fonts';
 
+export const container = css`
+	padding: 20px;
+	position: relative;
+
+	.options {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 11vw 20px;
+	}
+`;
+
 export const buttonStyled = css`
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 
 	display: block;
 	margin-left: auto;
@@ -13,9 +24,4 @@ export const buttonStyled = css`
 	font-family: ${fonts.inter};
 	font-size: 20px;
 	padding: 10px 20px;
-`;
-
-export const container = css`
-	padding: 20px;
-	position: relative;
 `;

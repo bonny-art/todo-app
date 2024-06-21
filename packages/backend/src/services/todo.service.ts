@@ -1,3 +1,5 @@
+import { convertToBoolean } from '@/helpers/convert-to-boolean.util';
+import { queryInfoT, whereConditionsT } from '@/types/todos.type';
 import { PrismaClient, Todo } from '@prisma/client';
 
 const client = new PrismaClient();
@@ -12,14 +14,81 @@ export default class TodoService {
 		return todos;
 	}
 
-	async getAllTodosForUser(userId: number): Promise<Todo[]> {
-		const publicTodos = await client.todo.findMany({
-			where: { isPrivate: false },
-		});
-		const privateTodos = await client.todo.findMany({
-			where: { isPrivate: true, userId },
-		});
-		return [...publicTodos, ...privateTodos];
+	async getAllTodosForUser(
+		userId: number,
+		queryInfo: queryInfoT,
+	): Promise<Todo[]> {
+		const isPrivate = convertToBoolean(queryInfo.isPrivate);
+		const isCompleted = convertToBoolean(queryInfo.isCompleted);
+		const searchQuery = queryInfo.searchQuery;
+
+		const whereConditions: whereConditionsT = {};
+
+		if (isCompleted) {
+			whereConditions.isCompleted = true;
+		}
+
+		if (searchQuery) {
+			whereConditions.title = {
+				contains: searchQuery,
+			};
+		}
+		const todos = [];
+
+		if (isPrivate === false) {
+			const publicTodos = await client.todo.findMany({
+				where: {
+					...whereConditions,
+					isPrivate: false,
+				},
+			});
+			todos.push(...publicTodos);
+		} else if (isPrivate === true) {
+			const privateTodos = await client.todo.findMany({
+				where: {
+					...whereConditions,
+					isPrivate: true,
+					userId,
+				},
+			});
+			todos.push(...privateTodos);
+		} else {
+			const publicTodos = await client.todo.findMany({
+				where: {
+					...whereConditions,
+					isPrivate: false,
+				},
+			});
+
+			const privateTodos = await client.todo.findMany({
+				where: {
+					...whereConditions,
+					isPrivate: true,
+					userId,
+				},
+			});
+
+			todos.push(...publicTodos, ...privateTodos);
+		}
+
+		return todos;
+
+		// const publicTodos = await client.todo.findMany({
+		// 	where: {
+		// 		...whereConditions,
+		// 		isPrivate: false,
+		// 	},
+		// });
+
+		// const privateTodos = await client.todo.findMany({
+		// 	where: {
+		// 		...whereConditions,
+		// 		isPrivate: true,
+		// 		userId,
+		// 	},
+		// });
+
+		// return [...publicTodos, ...privateTodos];
 	}
 
 	async findById(id: number): Promise<Todo | null> {

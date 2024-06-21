@@ -4,8 +4,10 @@ export const colors = Object.freeze({
 	antiFlashWhite: '#f2f2f2',
 	brightGray: '#eaeaea',
 	bostonUniversityRed: '#c60000',
+	crimsonRed: '#920202',
 	darkGunmetal: '#1c2127',
 
 	blackSemitranparent: '#0000007f',
 	chineseBlackTransp: '#11141826',
+	bostonUniversityRedTransp: '#c6000090',
 });

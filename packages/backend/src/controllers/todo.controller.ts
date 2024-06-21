@@ -9,14 +9,15 @@ export class TodoController {
 
 	async getAllTodo(req: Request, res: Response): Promise<void> {
 		const user: User = req.user as User;
-
 		if (!user?.id) {
 			throw HttpError(404, 'User not found');
 		}
-
 		const id = user.id;
 
-		const todos = await this.todoService.getAllTodosForUser(id);
+		const queryInfo = req.query;
+
+		const todos = await this.todoService.getAllTodosForUser(id, queryInfo);
+
 		res.send(todos);
 	}
 

@@ -2,13 +2,27 @@ import { create } from 'zustand';
 import { todoService } from '~shared/services/todos.service';
 import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
 
+type queryInfoT = {
+	searchQuery?: string | null;
+	isPrivate?: boolean | undefined;
+	isCompleted?: boolean | undefined;
+};
+
+export type queryT = {
+	searchQuery: string | null;
+	isPrivate: boolean | undefined;
+	isCompleted: boolean | undefined;
+};
+
 interface ITodoStore {
 	todos: TodoT[];
 	todo: TodoT;
 	isEdited: boolean;
+	query: queryT;
 
 	setIsEditedTrue: () => void;
 	setIsEditedFalse: () => void;
+	setQuery: (query: queryInfoT) => void;
 
 	getAllTodos: () => Promise<void>;
 	getTodo: (id: number) => Promise<void>;
@@ -22,6 +36,11 @@ export const useTodoStore = create<ITodoStore>((set) => {
 		todos: [],
 		todo: {} as TodoT,
 		isEdited: false,
+		query: {
+			searchQuery: null,
+			isPrivate: undefined,
+			isCompleted: undefined,
+		},
 
 		setIsEditedTrue: (): void => {
 			set(() => {
@@ -39,8 +58,19 @@ export const useTodoStore = create<ITodoStore>((set) => {
 			});
 		},
 
+		setQuery: (queryInfo: queryInfoT): void => {
+			set((state) => ({
+				query: {
+					...state.query,
+					...queryInfo,
+				},
+			}));
+		},
+
 		getAllTodos: async (): Promise<void> => {
-			const todos = await todoService.getAllTodos();
+			const { query } = useTodoStore.getState();
+
+			const todos = await todoService.getAllTodos(query);
 
 			set(() => {
 				return {
