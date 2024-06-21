@@ -15,7 +15,7 @@ export type TodoUpdateDataT = {
 };
 
 export type queryInfoT = {
-	searchQuery?: string | null;
+	searchQuery?: string | undefined;
 	isPrivate?: string | undefined;
 	isCompleted?: string | undefined;
 };

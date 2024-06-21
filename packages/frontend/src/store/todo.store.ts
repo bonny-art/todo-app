@@ -3,13 +3,13 @@ import { todoService } from '~shared/services/todos.service';
 import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
 
 type queryInfoT = {
-	searchQuery?: string | null;
+	searchQuery?: string | undefined;
 	isPrivate?: boolean | undefined;
 	isCompleted?: boolean | undefined;
 };
 
 export type queryT = {
-	searchQuery: string | null;
+	searchQuery: string | undefined;
 	isPrivate: boolean | undefined;
 	isCompleted: boolean | undefined;
 };

@@ -1,11 +1,7 @@
 import { Button } from '@blueprintjs/core';
 import { Form, Formik, FormikHelpers } from 'formik';
 import React from 'react';
-import { InputField } from '~shared/components/input-field/input-field';
-import { queryFormikT } from '~shared/types/todo.type';
 
-import { seqrchQueryValidationSchema } from '~shared/yup.schemas/todo-yup.schemas';
-import { useTodoStore } from '~store/todo.store';
 import {
 	container,
 	input,
@@ -13,6 +9,11 @@ import {
 	searchFormStyled,
 } from './search-filter.styled';
 import { IoMdSearch } from 'react-icons/io';
+
+import { InputField } from '~shared/components/input-field/input-field';
+import { useTodoStore } from '~store/todo.store';
+import { queryFormikT } from '~shared/types/todo.type';
+import { seqrchQueryValidationSchema } from '~shared/yup.schemas/todo-yup.schemas';
 
 export const SearchFilter = (): JSX.Element => {
 	const todoStore = useTodoStore();
@@ -26,7 +27,7 @@ export const SearchFilter = (): JSX.Element => {
 		actions: FormikHelpers<queryFormikT>,
 	): void => {
 		todoStore.setQuery({
-			searchQuery: values.searchQuery.trim() || null,
+			searchQuery: values.searchQuery.trim() || undefined,
 		});
 
 		actions.setSubmitting(false);
