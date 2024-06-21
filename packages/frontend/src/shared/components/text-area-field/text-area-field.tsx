@@ -8,7 +8,7 @@ export const TextareaField = ({
 	placeholder,
 	errors,
 	touched,
-}: FieldProps): React.ReactNode => (
+}: FieldProps): JSX.Element => (
 	<>
 		<Field
 			className={className}

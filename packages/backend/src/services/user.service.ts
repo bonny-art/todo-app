@@ -42,6 +42,7 @@ export default class UserService {
 	async updateUser(
 		id: number,
 		data: {
+			name?: string;
 			verificationToken?: string;
 			verify?: boolean;
 			passwordRecoveryToken?: string;

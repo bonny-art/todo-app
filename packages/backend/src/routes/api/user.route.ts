@@ -6,6 +6,7 @@ import { requireAuth } from '@/middlewares/auth.middleware';
 import { tryCatchHandler } from '@/middlewares/tryCatch';
 import validateBody from '@/middlewares/validateBody';
 import {
+	changeNameSchema,
 	changePasswordSchema,
 	createUserSchema,
 	executeRecoverySchema,
@@ -20,11 +21,18 @@ const router: Router = Router();
 // @route   POST api/user
 // @desc    Register user given their email and password, returns the token upon successful registration
 // @access  Public
+router.get(
+	'/',
+	requireAuth,
+	tryCatchHandler(userController.getUser.bind(userController)),
+);
+
 router.post(
 	'/register',
 	validateBody(createUserSchema),
 	tryCatchHandler(authController.registerUser.bind(authController)),
 );
+
 router.patch(
 	'/verify/:verificationToken',
 	tryCatchHandler(authController.verificateUser.bind(authController)),
@@ -54,6 +62,13 @@ router.patch(
 	requireAuth,
 	validateBody(changePasswordSchema),
 	tryCatchHandler(userController.changePassword.bind(userController)),
+);
+
+router.patch(
+	'/change-name',
+	requireAuth,
+	validateBody(changeNameSchema),
+	tryCatchHandler(userController.changeName.bind(userController)),
 );
 
 router.patch(

@@ -3,15 +3,17 @@ import React from 'react';
 import { FieldProps } from '~shared/types/todo.type';
 
 export const InputField = ({
+	type = 'text',
 	className,
 	name,
 	placeholder,
 	errors,
 	touched,
-}: FieldProps): React.ReactNode => (
+}: FieldProps): JSX.Element => (
 	<>
 		<Field
 			className={className}
+			type={type}
 			as="input"
 			name={name}
 			placeholder={placeholder}

@@ -11,7 +11,7 @@ import { Modal } from '~shared/components/modal/modal';
 import TodoForm from '../todo-form/todo-form';
 import { useTodoStore } from '~store/todo.store';
 
-const MobileTodoContainer = ({ todos }: TodosPropsT): React.ReactNode => {
+const MobileTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const todoStore = useTodoStore();
 

@@ -6,7 +6,7 @@ import MobileTodoContainer from './components/mobile-todo-container/mobile-todo-
 import TabletTodoContainer from './components/tablet-todo-container/tablet-todo-container';
 import DesktopTodoContainer from './components/desktop-todo-container/desktop-todo-container';
 
-const TodoPage = (): React.ReactNode => {
+const TodoPage = (): JSX.Element => {
 	const todos = useTodoStore((state) => state.todos);
 
 	const todoStore = useTodoStore();
