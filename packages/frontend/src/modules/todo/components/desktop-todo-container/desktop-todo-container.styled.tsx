@@ -6,6 +6,11 @@ export const todosContainerStyled = css`
 	font-family: ${fonts.inter};
 
 	padding: 20px 10px;
+
+	.options {
+		display: flex;
+		justify-content: space-between;
+	}
 `;
 
 export const addTodoButton = css`

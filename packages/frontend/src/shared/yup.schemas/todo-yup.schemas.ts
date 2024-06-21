@@ -14,3 +14,7 @@ export const todoValidationSchema = Yup.object().shape({
 			'Visibility must be either private or public',
 		),
 });
+
+export const seqrchQueryValidationSchema = Yup.object().shape({
+	query: Yup.string(),
+});

@@ -1,3 +1,5 @@
+import { convertToBoolean } from '@/helpers/convert-to-boolean.util';
+import { queryInfoT } from '@/types/todos.type';
 import { PrismaClient, Todo } from '@prisma/client';
 
 const client = new PrismaClient();
@@ -12,14 +14,28 @@ export default class TodoService {
 		return todos;
 	}
 
-	async getAllTodosForUser(userId: number): Promise<Todo[]> {
-		const publicTodos = await client.todo.findMany({
-			where: { isPrivate: false },
+	async getAllTodosForUser(
+		userId: number,
+		queryInfo: queryInfoT,
+	): Promise<Todo[]> {
+		const isPrivate = convertToBoolean(queryInfo.isPrivate);
+		const isCompleted = convertToBoolean(queryInfo.isCompleted);
+		const searchQuery = queryInfo.searchQuery;
+
+		const todos = await client.todo.findMany({
+			where: {
+				AND: [
+					{ title: searchQuery },
+					{ isCompleted: isCompleted },
+					{ isPrivate: isPrivate },
+					{
+						OR: [{ userId }, { isPrivate: false }],
+					},
+				],
+			},
 		});
-		const privateTodos = await client.todo.findMany({
-			where: { isPrivate: true, userId },
-		});
-		return [...publicTodos, ...privateTodos];
+
+		return todos;
 	}
 
 	async findById(id: number): Promise<Todo | null> {

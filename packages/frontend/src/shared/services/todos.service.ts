@@ -5,15 +5,17 @@ import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
 axios.defaults.baseURL = API_CONFIG.BASE_URL;
 
 import { HttpSerivce } from './http.service';
+import { queryT } from '~store/todo.store';
 
 class TodoService extends HttpSerivce {
 	constructor() {
 		super();
 	}
 
-	async getAllTodos(): Promise<TodoT[]> {
+	async getAllTodos(query: queryT): Promise<TodoT[]> {
 		const response = await this.get<TodoT[]>({
 			url: todosEndpoints.GET_ALL,
+			params: query,
 		});
 
 		return response.data;

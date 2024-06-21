@@ -12,7 +12,6 @@ import {
 	inputContainer,
 } from './recover-password-form.styled';
 import { useParams } from 'react-router-dom';
-import { recoverPasswordFormInitial } from '~shared/constants/user.constatns';
 
 const RecoverPasswordForm = (): JSX.Element => {
 	const userStore = useUserStore();
@@ -22,6 +21,11 @@ const RecoverPasswordForm = (): JSX.Element => {
 
 	const handleTogglePassword = (): void => {
 		setShowPassword(!showPassword);
+	};
+
+	const initialValues = {
+		password: '',
+		repeatPassword: '',
 	};
 
 	const handleSubmit = (
@@ -41,7 +45,7 @@ const RecoverPasswordForm = (): JSX.Element => {
 	return (
 		<div className={container}>
 			<Formik
-				initialValues={recoverPasswordFormInitial}
+				initialValues={initialValues}
 				validationSchema={recoverPasswordValidationSchema}
 				onSubmit={handleSubmit}
 			>

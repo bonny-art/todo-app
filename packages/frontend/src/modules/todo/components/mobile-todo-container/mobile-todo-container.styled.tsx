@@ -4,7 +4,6 @@ import { fonts } from '~shared/styles/fonts';
 export const todosContainerStyled = css`
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
 
 	font-family: ${fonts.inter};
 
@@ -19,4 +18,8 @@ export const listStyled = css`
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+`;
+
+export const addTodoButton = css`
+	margin-bottom: 20px;
 `;

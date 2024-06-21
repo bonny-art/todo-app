@@ -2,25 +2,22 @@ import React, { useState } from 'react';
 import { TodoPropsT, addTodoT } from '~shared/types/todo.type';
 import { useTodoStore } from '~store/todo.store';
 
-import { Button, Switch } from '@blueprintjs/core';
+import { Button, Card, Elevation, Switch } from '@blueprintjs/core';
 import {
-	button,
 	buttonsContainer,
-	cardContainer,
 	cardStyled,
 	controlsContainer,
-	descriptionStyled,
-	titleStyled,
-} from './tablet-todo-item.styled';
+} from './mobile-todo-item.styled';
 import { Modal } from '~shared/components/modal/modal';
-import TodoForm from '../todo-form/todo-form';
-import TodoCard from '../todo-card/todo-card';
+import TodoForm from '../todo-form/todo-form.component';
+import TodoCard from '../todo-card/todo-card.component';
 
-const TabletTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
+const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
 
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const isEdited = todoStore.isEdited;
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const onDeleteClick = (): void => {
 		todoStore.deleteTodo(todo.id);
@@ -50,29 +47,28 @@ const TabletTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 
 	return (
 		<>
-			<div className={cardContainer}>
-				<div className={cardStyled}>
-					<h5 className={titleStyled}>{todo.title}</h5>
-					<p className={descriptionStyled}>{todo.description}</p>
-					<div className={controlsContainer}>
-						<div className={buttonsContainer}>
-							<Button className={button} onClick={openModal}>
-								View
-							</Button>
-							<Button className={button} onClick={onDeleteClick}>
-								Delete
-							</Button>
-						</div>
-
-						<Switch
-							onChange={onSwitchToggle}
-							className="bp5-align-right switch"
-							labelElement={'Complete'}
-							checked={todo.isCompleted}
-						></Switch>
+			<Card
+				className={cardStyled}
+				interactive={true}
+				elevation={Elevation.TWO}
+			>
+				<h5>{todo.title}</h5>
+				<p>{todo.description}</p>
+				<div className={controlsContainer}>
+					<div className={buttonsContainer}>
+						<Button onClick={openModal}>View</Button>
+						<Button onClick={onDeleteClick}>Delete</Button>
 					</div>
+
+					<Switch
+						onChange={onSwitchToggle}
+						className="bp5-align-right"
+						labelElement={'Complete'}
+						checked={todo.isCompleted}
+						style={{ marginBottom: '0' }}
+					></Switch>
 				</div>
-			</div>
+			</Card>
 
 			{isModalOpen && (
 				<Modal closeModal={closeModal}>
@@ -90,4 +86,6 @@ const TabletTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	);
 };
 
-export default TabletTodoItem;
+export default MobileTodoItem;
+
+// segmented - control;

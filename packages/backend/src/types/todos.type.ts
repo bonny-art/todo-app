@@ -13,3 +13,18 @@ export type TodoUpdateDataT = {
 	isCompleted?: boolean;
 	isPrivate?: boolean;
 };
+
+export type queryInfoT = {
+	searchQuery?: string | undefined;
+	isPrivate?: string | undefined;
+	isCompleted?: string | undefined;
+};
+
+export type whereConditionsT = {
+	isPrivate?: boolean;
+	isCompleted?: boolean;
+	title?: {
+		contains: string;
+	};
+	userId?: number;
+};
