@@ -12,13 +12,10 @@ import {
 	input,
 	inputContainer,
 } from './forget-password-form.styled';
+import { forgetPasswordFormInitial } from '~shared/constants/user.constatns';
 
 const ForgetPasswordForm = (): JSX.Element => {
 	const userStore = useUserStore();
-
-	const initialValues = {
-		email: '',
-	};
 
 	const handleSubmit = (
 		values: emailUserT,
@@ -32,7 +29,7 @@ const ForgetPasswordForm = (): JSX.Element => {
 	return (
 		<div className={container}>
 			<Formik
-				initialValues={initialValues}
+				initialValues={forgetPasswordFormInitial}
 				validationSchema={sendEmailValidationSchema}
 				onSubmit={handleSubmit}
 			>

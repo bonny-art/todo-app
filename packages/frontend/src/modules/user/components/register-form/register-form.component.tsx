@@ -7,6 +7,7 @@ import { useUserStore } from '~store/user.store';
 import PasswordEyeButton from '~shared/components/password-eye-button/password-eye-button.component';
 import { registerUserFormikT } from '~shared/types/user.type';
 import { container, input, inputContainer } from './register-form.styled';
+import { registerFormInitial } from '~shared/constants/user.constatns';
 
 const RegisterForm = (): JSX.Element => {
 	const userStore = useUserStore();
@@ -15,13 +16,6 @@ const RegisterForm = (): JSX.Element => {
 
 	const handleTogglePassword = (): void => {
 		setShowPassword(!showPassword);
-	};
-
-	const initialValues = {
-		name: '',
-		email: '',
-		password: '',
-		repeatPassword: '',
 	};
 
 	const handleSubmit = (
@@ -42,7 +36,7 @@ const RegisterForm = (): JSX.Element => {
 	return (
 		<div className={container}>
 			<Formik
-				initialValues={initialValues}
+				initialValues={registerFormInitial}
 				validationSchema={registerValidationSchema}
 				onSubmit={handleSubmit}
 			>

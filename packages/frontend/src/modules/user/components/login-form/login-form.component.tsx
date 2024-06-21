@@ -8,6 +8,7 @@ import { loginValidationSchema } from '~shared/yup.schemas/user-yup.schemas';
 
 import PasswordEyeButton from '~shared/components/password-eye-button/password-eye-button.component';
 import { useUserStore } from '~store/user.store';
+import { loginFormInitial } from '~shared/constants/user.constatns';
 
 const LoginForm = (): JSX.Element => {
 	const userStore = useUserStore();
@@ -16,11 +17,6 @@ const LoginForm = (): JSX.Element => {
 
 	const handleTogglePassword = (): void => {
 		setShowPassword(!showPassword);
-	};
-
-	const initialValues = {
-		email: '',
-		password: '',
 	};
 
 	const handleSubmit = (
@@ -35,7 +31,7 @@ const LoginForm = (): JSX.Element => {
 	return (
 		<div className={container}>
 			<Formik
-				initialValues={initialValues}
+				initialValues={loginFormInitial}
 				validationSchema={loginValidationSchema}
 				onSubmit={handleSubmit}
 			>
