@@ -37,12 +37,7 @@ const ProfileForm = ({ onSaveClick }: ProfileFormProps): JSX.Element => {
 		values: EditUserProfileFormikT,
 		actions: FormikHelpers<EditUserProfileFormikT>,
 	): void => {
-		console.log('🚀 ~ userStore.user.name:', userStore.user.name);
-		console.log('🚀 ~ values.name:', values.name);
-
 		if (values.name !== userStore.user.name) {
-			console.log('🚀 ~ name changed');
-
 			const userInfo = {
 				name: values.name,
 			};
