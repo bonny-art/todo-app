@@ -19,6 +19,9 @@ interface ITodoStore {
 	todo: TodoT;
 	isEdited: boolean;
 	query: queryT;
+	totalPages: number;
+	currentPage: number;
+	totalTodos: number;
 
 	setIsEditedTrue: () => void;
 	setIsEditedFalse: () => void;
@@ -41,6 +44,9 @@ export const useTodoStore = create<ITodoStore>((set) => {
 			isPrivate: undefined,
 			isCompleted: undefined,
 		},
+		totalPages: 0,
+		currentPage: 0,
+		totalTodos: 0,
 
 		setIsEditedTrue: (): void => {
 			set(() => {
@@ -70,11 +76,14 @@ export const useTodoStore = create<ITodoStore>((set) => {
 		getAllTodos: async (): Promise<void> => {
 			const { query } = useTodoStore.getState();
 
-			const todos = await todoService.getAllTodos(query);
+			const todosObject = await todoService.getAllTodos(query);
 
 			set(() => {
 				return {
-					todos,
+					todos: todosObject.todos,
+					totalPages: todosObject.totalPages,
+					currentPage: todosObject.currentPage,
+					totalTodos: todosObject.totalTodos,
 				};
 			});
 		},

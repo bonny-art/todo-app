@@ -92,3 +92,11 @@ export type RadioFieldProps = {
 export type queryFormikT = {
 	searchQuery: string;
 };
+
+export type TodosObjectT = {
+	todos: TodoT[];
+	totalPages: number;
+	currentPage: number;
+	perPage: number;
+	totalTodos: number;
+};

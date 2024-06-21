@@ -15,10 +15,26 @@ export class TodoController {
 		const id = user.id;
 
 		const queryInfo = req.query;
+		const perPage = Number(queryInfo.perPage);
 
 		const todos = await this.todoService.getAllTodosForUser(id, queryInfo);
 
-		res.send(todos);
+		const todosNumber = await this.todoService.countAllTodosForUser(
+			id,
+			queryInfo,
+		);
+
+		const totalPages = Math.ceil(todosNumber / perPage);
+
+		const todosObject = {
+			todos,
+			totalPages,
+			currentPage: Number(queryInfo.currentPage),
+			perPage,
+			totalTodos: todosNumber,
+		};
+
+		res.send(todosObject);
 	}
 
 	async getTodo(req: Request, res: Response): Promise<void> {

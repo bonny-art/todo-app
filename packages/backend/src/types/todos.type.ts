@@ -18,6 +18,8 @@ export type queryInfoT = {
 	searchQuery?: string | undefined;
 	isPrivate?: string | undefined;
 	isCompleted?: string | undefined;
+	page?: string | undefined;
+	perPage?: string | undefined;
 };
 
 export type whereConditionsT = {

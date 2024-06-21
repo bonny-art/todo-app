@@ -13,9 +13,22 @@ import { useTodoStore } from '~store/todo.store';
 import { SearchFilter } from '../search-filter/search-filter.component';
 import { OptionFilter } from '../option-filter/option-filter.component';
 
+// const ITEMS_PER_PAGE = 10;
+
 const DesktopTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const todoStore = useTodoStore();
+	// const [currentPage, setCurrentPage] = useState(0);
+
+	// const pageCount = Math.ceil(items.length / itemsPerPage);
+
+	// const startIdx = currentPage * ITEMS_PER_PAGE;
+	// const endIdx = startIdx + ITEMS_PER_PAGE;
+
+	// const handlePageChange = (selectedPage) => {
+	// 	setCurrentPage(selectedPage);
+	// };
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openModal = (): void => {
 		setIsModalOpen(true);
@@ -55,6 +68,16 @@ const DesktopTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
 					))}
 				</tbody>
 			</table>
+
+			{/* <ReactPaginate
+				breakLabel="..."
+				nextLabel="next >"
+				onPageChange={handlePageChange}
+				pageRangeDisplayed={5}
+				pageCount={todoStore.totalPages}
+				previousLabel="< previous"
+				renderOnZeroPageCount={null}
+			/> */}
 
 			{isModalOpen && (
 				<Modal closeModal={closeModal}>
