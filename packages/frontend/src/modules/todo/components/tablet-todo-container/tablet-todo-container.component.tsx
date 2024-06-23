@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 
-import { TodosPropsT, addTodoT } from '~shared/types/todo.type';
+import { TabletTodosPropsT, addTodoT } from '~shared/types/todo.type';
 
 import { buttonStyled, container } from './tablet-todo-container.styled';
 import TabletTodoItem from '../tablet-todo-item/tablet-todo-item.component';
@@ -17,7 +17,18 @@ import { useTodoStore } from '~store/todo.store';
 import { SearchFilter } from '../search-filter/search-filter.component';
 import { OptionFilter } from '../option-filter/option-filter.component';
 
-const TabletTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
+const TabletTodoContainer = ({
+	todos,
+	currentPage,
+	totalPages,
+	isLastPage,
+	incrementPage,
+}: TabletTodosPropsT): JSX.Element => {
+	console.log('🚀 ~ incrementPage:', incrementPage);
+	console.log('🚀 ~ isLastPage:', isLastPage);
+	console.log('🚀 ~ totalPages:', totalPages);
+	console.log('🚀 ~ currentPage:', currentPage);
+
 	const todoStore = useTodoStore();
 	const [isModalOpen, setIsModalOpen] = useState(false);
 

@@ -29,8 +29,32 @@ export type updateTodoT = {
 	isPrivate?: boolean;
 };
 
-export type TodosPropsT = {
+export type MobileTodosPropsT = {
 	todos: TodoT[];
+	currentPage: number;
+	totalPages: number;
+
+	incrementPage: () => void;
+};
+
+export type TabletTodosPropsT = {
+	todos: TodoT[];
+	currentPage: number;
+	totalPages: number;
+	isLastPage: boolean;
+
+	incrementPage: () => void;
+};
+
+export type DesktopTodosPropsT = {
+	todos: TodoT[];
+	currentPage: number;
+	queryPage: number;
+	totalPages: number;
+	isLastPage: boolean;
+
+	incrementPage: () => void;
+	decrementPage: () => void;
 };
 
 export type TodoPropsT = {

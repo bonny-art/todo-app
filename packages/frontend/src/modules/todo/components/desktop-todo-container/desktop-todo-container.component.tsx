@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TodosPropsT, addTodoT } from '~shared/types/todo.type';
+import { DesktopTodosPropsT, addTodoT } from '~shared/types/todo.type';
 import DesktopTodoItem from '../desktop-todo-item/desktop-todo-item.component';
 import { Button } from '@blueprintjs/core';
 import {
@@ -12,21 +12,29 @@ import TodoForm from '../todo-form/todo-form.component';
 import { useTodoStore } from '~store/todo.store';
 import { SearchFilter } from '../search-filter/search-filter.component';
 import { OptionFilter } from '../option-filter/option-filter.component';
+import ReactPaginate from 'react-paginate';
 
-// const ITEMS_PER_PAGE = 10;
-
-const DesktopTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
+const DesktopTodoContainer = ({
+	todos,
+	currentPage,
+	queryPage,
+	totalPages,
+	isLastPage,
+	incrementPage,
+	decrementPage,
+}: DesktopTodosPropsT): JSX.Element => {
+	console.log('🚀 ~ decrementPage:', decrementPage);
+	console.log('🚀 ~ incrementPage:', incrementPage);
+	console.log('🚀 ~ isLastPage:', isLastPage);
+	console.log('🚀 ~ totalPages:', totalPages);
+	console.log('🚀 ~ queryPage:', queryPage);
+	console.log('🚀 ~ currentPage:', currentPage);
 	const todoStore = useTodoStore();
-	// const [currentPage, setCurrentPage] = useState(0);
 
-	// const pageCount = Math.ceil(items.length / itemsPerPage);
-
-	// const startIdx = currentPage * ITEMS_PER_PAGE;
-	// const endIdx = startIdx + ITEMS_PER_PAGE;
-
-	// const handlePageChange = (selectedPage) => {
-	// 	setCurrentPage(selectedPage);
-	// };
+	const handlePageClick = (event: { selected: number }): void => {
+		todoStore.setCurrentPage(event.selected + 1);
+		todoStore.setQuery({ page: event.selected + 1 });
+	};
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -69,15 +77,15 @@ const DesktopTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
 				</tbody>
 			</table>
 
-			{/* <ReactPaginate
+			<ReactPaginate
 				breakLabel="..."
 				nextLabel="next >"
-				onPageChange={handlePageChange}
+				onPageChange={handlePageClick}
 				pageRangeDisplayed={5}
 				pageCount={todoStore.totalPages}
 				previousLabel="< previous"
 				renderOnZeroPageCount={null}
-			/> */}
+			/>
 
 			{isModalOpen && (
 				<Modal closeModal={closeModal}>

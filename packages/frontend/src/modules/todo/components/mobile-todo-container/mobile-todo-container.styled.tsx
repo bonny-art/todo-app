@@ -23,3 +23,9 @@ export const listStyled = css`
 export const addTodoButton = css`
 	margin-bottom: 20px;
 `;
+
+export const observerElementStyled = css`
+	height: 1px;
+	width: 100%;
+	margin: -1px;
+`;
