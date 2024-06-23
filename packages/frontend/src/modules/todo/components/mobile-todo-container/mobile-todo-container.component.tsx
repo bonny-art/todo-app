@@ -4,6 +4,7 @@ import MobileTodoItem from '../mobile-todo-item/mobile-todo-item.component';
 import {
 	addTodoButton,
 	listStyled,
+	noTodosStyled,
 	todosContainerStyled,
 } from './mobile-todo-container.styled';
 import { Button } from '@blueprintjs/core';
@@ -61,7 +62,7 @@ const MobileTodoContainer = ({
 					))}
 				</ul>
 			) : (
-				<p>Ups! No todos. Add the first!</p>
+				<p className={noTodosStyled}>No todos for such filters.</p>
 			)}
 
 			{isModalOpen && (

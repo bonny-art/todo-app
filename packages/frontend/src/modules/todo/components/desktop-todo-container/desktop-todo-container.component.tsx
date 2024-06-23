@@ -3,7 +3,9 @@ import { DesktopTodosPropsT, addTodoT } from '~shared/types/todo.type';
 import DesktopTodoItem from '../desktop-todo-item/desktop-todo-item.component';
 import { Button } from '@blueprintjs/core';
 import {
+	MyPaginate,
 	addTodoButton,
+	noTodosStyled,
 	tableStyle,
 	todosContainerStyled,
 } from './desktop-todo-container.styled';
@@ -16,19 +18,8 @@ import ReactPaginate from 'react-paginate';
 
 const DesktopTodoContainer = ({
 	todos,
-	currentPage,
-	queryPage,
 	totalPages,
-	isLastPage,
-	incrementPage,
-	decrementPage,
 }: DesktopTodosPropsT): JSX.Element => {
-	console.log('🚀 ~ decrementPage:', decrementPage);
-	console.log('🚀 ~ incrementPage:', incrementPage);
-	console.log('🚀 ~ isLastPage:', isLastPage);
-	console.log('🚀 ~ totalPages:', totalPages);
-	console.log('🚀 ~ queryPage:', queryPage);
-	console.log('🚀 ~ currentPage:', currentPage);
 	const todoStore = useTodoStore();
 
 	const handlePageClick = (event: { selected: number }): void => {
@@ -61,31 +52,37 @@ const DesktopTodoContainer = ({
 				<OptionFilter />
 				<SearchFilter />
 			</div>
+			{todos.length ? (
+				<>
+					<table className={tableStyle}>
+						<thead>
+							<tr>
+								<th>Todo Title</th>
+								<th>Description</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{todos.map((todo) => (
+								<DesktopTodoItem key={todo.id} todo={todo} />
+							))}
+						</tbody>
+					</table>
 
-			<table className={tableStyle}>
-				<thead>
-					<tr>
-						<th>Todo Title</th>
-						<th>Description</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					{todos.map((todo) => (
-						<DesktopTodoItem key={todo.id} todo={todo} />
-					))}
-				</tbody>
-			</table>
-
-			<ReactPaginate
-				breakLabel="..."
-				nextLabel="next >"
-				onPageChange={handlePageClick}
-				pageRangeDisplayed={5}
-				pageCount={todoStore.totalPages}
-				previousLabel="< previous"
-				renderOnZeroPageCount={null}
-			/>
+					<ReactPaginate
+						className={MyPaginate}
+						breakLabel="..."
+						nextLabel="next >"
+						onPageChange={handlePageClick}
+						pageRangeDisplayed={3}
+						pageCount={totalPages}
+						previousLabel="< previous"
+						renderOnZeroPageCount={null}
+					/>
+				</>
+			) : (
+				<p className={noTodosStyled}>No todos for such filters.</p>
+			)}
 
 			{isModalOpen && (
 				<Modal closeModal={closeModal}>

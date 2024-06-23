@@ -7,13 +7,18 @@ import {
 	buttonsContainer,
 	cardStyled,
 	controlsContainer,
+	switchStyled,
 } from './mobile-todo-item.styled';
 import { Modal } from '~shared/components/modal/modal';
 import TodoForm from '../todo-form/todo-form.component';
 import TodoCard from '../todo-card/todo-card.component';
+import { useUserStore } from '~store/user.store';
 
 const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
+	const userStore = useUserStore();
+
+	const isUpdatable = todo.userId === userStore.user.id;
 
 	const isEdited = todoStore.isEdited;
 
@@ -62,10 +67,11 @@ const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 
 					<Switch
 						onChange={onSwitchToggle}
-						className="bp5-align-right"
+						className={`bp5-align-right ${switchStyled}`}
 						labelElement={'Complete'}
 						checked={todo.isCompleted}
 						style={{ marginBottom: '0' }}
+						disabled={!isUpdatable}
 					></Switch>
 				</div>
 			</Card>

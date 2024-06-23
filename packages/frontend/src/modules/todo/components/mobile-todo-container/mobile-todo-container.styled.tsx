@@ -24,8 +24,7 @@ export const addTodoButton = css`
 	margin-bottom: 20px;
 `;
 
-export const observerElementStyled = css`
-	height: 1px;
-	width: 100%;
-	margin: -1px;
+export const noTodosStyled = css`
+	margin-top: 100px;
+	text-align: center;
 `;

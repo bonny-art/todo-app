@@ -1,4 +1,5 @@
 import { css } from '@emotion/css';
+import { colors } from '~shared/styles';
 import { fonts } from '~shared/styles/fonts';
 
 export const container = css`
@@ -24,4 +25,15 @@ export const buttonStyled = css`
 	font-family: ${fonts.inter};
 	font-size: 20px;
 	padding: 10px 20px;
+`;
+
+export const noTodosStyled = css`
+	margin-top: 100px;
+	text-align: center;
+`;
+
+export const swiperStled = css`
+	.swiper-pagination-bullet-active {
+		background-color: ${colors.bostonUniversityRed};
+	}
 `;

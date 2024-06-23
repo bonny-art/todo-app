@@ -92,10 +92,6 @@ const TodoPage = (): JSX.Element => {
 		setQuery({ ...query, page: query.page + 1 });
 	};
 
-	const decrementPage = (): void => {
-		setQuery({ ...query, page: query.page - 1 });
-	};
-
 	return (
 		<>
 			{query && (
@@ -113,8 +109,6 @@ const TodoPage = (): JSX.Element => {
 					{isTablet && (
 						<TabletTodoContainer
 							todos={todos}
-							currentPage={currentPage}
-							totalPages={totalPages}
 							isLastPage={isLastPage()}
 							incrementPage={incrementPage}
 						/>
@@ -122,12 +116,7 @@ const TodoPage = (): JSX.Element => {
 					{isDesktop && (
 						<DesktopTodoContainer
 							todos={todos}
-							currentPage={currentPage}
-							queryPage={query.page}
 							totalPages={totalPages}
-							isLastPage={isLastPage()}
-							incrementPage={incrementPage}
-							decrementPage={decrementPage}
 						/>
 					)}
 				</>

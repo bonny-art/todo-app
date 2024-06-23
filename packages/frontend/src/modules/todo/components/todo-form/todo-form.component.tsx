@@ -11,8 +11,8 @@ import {
 	titleInput,
 } from './todo-form.styled';
 import { Button } from '@blueprintjs/core';
-import { TextareaField } from '~shared/components/text-area-field/text-area-field';
-import { RadioInputGroup } from '~shared/components/radio-input-group/radio-input-group';
+import { TextareaField } from '~shared/components/text-area-field/text-area-field.component';
+import { RadioInputGroup } from '~shared/components/radio-input-group/radio-input-group.component';
 import { todoValidationSchema } from '~shared/yup.schemas/todo-yup.schemas';
 import { useUserStore } from '~store/user.store';
 

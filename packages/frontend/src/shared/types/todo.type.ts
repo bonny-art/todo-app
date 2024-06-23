@@ -39,8 +39,6 @@ export type MobileTodosPropsT = {
 
 export type TabletTodosPropsT = {
 	todos: TodoT[];
-	currentPage: number;
-	totalPages: number;
 	isLastPage: boolean;
 
 	incrementPage: () => void;
@@ -48,13 +46,7 @@ export type TabletTodosPropsT = {
 
 export type DesktopTodosPropsT = {
 	todos: TodoT[];
-	currentPage: number;
-	queryPage: number;
 	totalPages: number;
-	isLastPage: boolean;
-
-	incrementPage: () => void;
-	decrementPage: () => void;
 };
 
 export type TodoPropsT = {
