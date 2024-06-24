@@ -6,7 +6,7 @@ import { Button, Switch } from '@blueprintjs/core';
 import { Modal } from '~shared/components/modal/modal';
 import TodoForm from '../todo-form/todo-form.component';
 import TodoCard from '../todo-card/todo-card.component';
-import { switchStyled } from './desktop-todo-item.styled';
+import { controlsContainer, switchStyled } from './desktop-todo-item.styled';
 import { useUserStore } from '~store/user.store';
 
 const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
@@ -51,7 +51,7 @@ const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 				<td className="description-cell">
 					<div>{todo.description}</div>
 				</td>
-				<td className="actions-cell">
+				<td className={`actions-cell ${controlsContainer}`}>
 					<Button className="button" onClick={openModal}>
 						View
 					</Button>

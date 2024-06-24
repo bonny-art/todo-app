@@ -67,7 +67,7 @@ const MobileTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 
 					<Switch
 						onChange={onSwitchToggle}
-						className={`bp5-align-right ${switchStyled}`}
+						className={`bp5-align-right switch ${switchStyled}`}
 						labelElement={'Complete'}
 						checked={todo.isCompleted}
 						style={{ marginBottom: '0' }}

@@ -16,6 +16,12 @@ export const controlsContainer = css`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+
+	.switch {
+		&.bp5-control.bp5-disabled {
+			cursor: default !important;
+		}
+	}
 `;
 
 export const buttonsContainer = css`
