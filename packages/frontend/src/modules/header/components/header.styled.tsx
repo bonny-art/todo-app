@@ -98,5 +98,9 @@ export const tableStyle = css`
 
 	.switch {
 		display: inline-block;
+
+		&.bp5-control.bp5-disabled {
+			cursor: default;
+		}
 	}
 `;

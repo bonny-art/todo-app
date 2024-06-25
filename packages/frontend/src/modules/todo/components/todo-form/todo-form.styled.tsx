@@ -33,6 +33,11 @@ export const titleInput = css`
 	border-radius: 5px;
 	padding: 5px;
 	resize: none;
+
+	&:focus {
+		outline: none;
+		border-color: ${colors.bostonUniversityRed};
+	}
 `;
 
 export const descriptionInput = css`
@@ -47,6 +52,11 @@ export const descriptionInput = css`
 	resize: none;
 
 	height: 170px;
+
+	&:focus {
+		outline: none;
+		border-color: ${colors.bostonUniversityRed};
+	}
 `;
 
 export const radioInput = css`
@@ -60,5 +70,14 @@ export const radioInput = css`
 		display: flex;
 		gap: 10px;
 		cursor: pointer;
+
+		&:focus,
+		:active {
+			outline: none;
+		}
+
+		& input[type='radio' i]:checked {
+			accent-color: ${colors.bostonUniversityRed} !important;
+		}
 	}
 `;

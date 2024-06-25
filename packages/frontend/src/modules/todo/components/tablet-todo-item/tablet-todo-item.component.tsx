@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TodoPropsT, addTodoT } from '~shared/types/todo.type';
 import { useTodoStore } from '~store/todo.store';
 
-import { Button, Switch } from '@blueprintjs/core';
+import { Button, Card, Switch } from '@blueprintjs/core';
 import {
 	button,
 	buttonsContainer,
@@ -10,14 +10,19 @@ import {
 	cardStyled,
 	controlsContainer,
 	descriptionStyled,
+	switchStyled,
 	titleStyled,
 } from './tablet-todo-item.styled';
 import { Modal } from '~shared/components/modal/modal';
 import TodoForm from '../todo-form/todo-form.component';
 import TodoCard from '../todo-card/todo-card.component';
+import { useUserStore } from '~store/user.store';
 
 const TabletTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
+	const userStore = useUserStore();
+
+	const isUpdatable = todo.userId === userStore.user.id;
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const isEdited = todoStore.isEdited;
@@ -51,7 +56,7 @@ const TabletTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	return (
 		<>
 			<div className={cardContainer}>
-				<div className={cardStyled}>
+				<Card className={`${cardStyled} bp5-elevation-2`}>
 					<h5 className={titleStyled}>{todo.title}</h5>
 					<p className={descriptionStyled}>{todo.description}</p>
 					<div className={controlsContainer}>
@@ -66,12 +71,13 @@ const TabletTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 
 						<Switch
 							onChange={onSwitchToggle}
-							className="bp5-align-right switch"
+							className={`bp5-align-right switch ${switchStyled}`}
 							labelElement={'Complete'}
 							checked={todo.isCompleted}
+							disabled={!isUpdatable}
 						></Switch>
 					</div>
-				</div>
+				</Card>
 			</div>
 
 			{isModalOpen && (

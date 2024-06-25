@@ -6,9 +6,14 @@ import { Button, Switch } from '@blueprintjs/core';
 import { Modal } from '~shared/components/modal/modal';
 import TodoForm from '../todo-form/todo-form.component';
 import TodoCard from '../todo-card/todo-card.component';
+import { controlsContainer, switchStyled } from './desktop-todo-item.styled';
+import { useUserStore } from '~store/user.store';
 
 const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
+	const userStore = useUserStore();
+
+	const isUpdatable = todo.userId === userStore.user.id;
 
 	const isEdited = todoStore.isEdited;
 
@@ -43,8 +48,10 @@ const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 		<>
 			<tr>
 				<td className="title-cell">{todo.title}</td>
-				<td className="description-cell">{todo.description}</td>
-				<td className="actions-cell">
+				<td className="description-cell">
+					<div>{todo.description}</div>
+				</td>
+				<td className={`actions-cell ${controlsContainer}`}>
 					<Button className="button" onClick={openModal}>
 						View
 					</Button>
@@ -53,10 +60,11 @@ const DesktopTodoItem = ({ todo }: TodoPropsT): JSX.Element => {
 					</Button>
 					<Switch
 						onChange={onSwitchToggle}
-						className="bp5-align-right switch"
+						className={`bp5-align-right switch ${switchStyled}`}
 						labelElement={'Complete'}
 						checked={todo.isCompleted}
 						style={{ marginBottom: '0' }}
+						disabled={!isUpdatable}
 					></Switch>
 				</td>
 			</tr>

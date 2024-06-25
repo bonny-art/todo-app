@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { TodosPropsT, addTodoT } from '~shared/types/todo.type';
 
 import MobileTodoItem from '../mobile-todo-item/mobile-todo-item.component';
 import {
 	addTodoButton,
 	listStyled,
+	noTodosStyled,
 	todosContainerStyled,
 } from './mobile-todo-container.styled';
 import { Button } from '@blueprintjs/core';
@@ -14,9 +14,25 @@ import { useTodoStore } from '~store/todo.store';
 import { SearchFilter } from '../search-filter/search-filter.component';
 import { OptionFilter } from '../option-filter/option-filter.component';
 
-const MobileTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+import { MobileTodosPropsT, addTodoT } from '~shared/types/todo.type';
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+
+const MobileTodoContainer = ({
+	todos,
+	currentPage,
+	totalPages,
+	incrementPage,
+}: MobileTodosPropsT): JSX.Element => {
 	const todoStore = useTodoStore();
+
+	useBottomScrollListener(() => {
+		if (currentPage >= totalPages) {
+			return;
+		}
+		incrementPage();
+	});
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openModal = (): void => {
 		setIsModalOpen(true);
@@ -38,11 +54,17 @@ const MobileTodoContainer = ({ todos }: TodosPropsT): JSX.Element => {
 			</Button>
 			<SearchFilter />
 			<OptionFilter />
-			<div className={listStyled}>
-				{todos.map((todo) => (
-					<MobileTodoItem key={todo.id} todo={todo} />
-				))}
-			</div>
+
+			{todos.length ? (
+				<ul className={listStyled}>
+					{todos.map((todo) => (
+						<MobileTodoItem key={todo.id} todo={todo} />
+					))}
+				</ul>
+			) : (
+				<p className={noTodosStyled}>No todos for such filters.</p>
+			)}
+
 			{isModalOpen && (
 				<Modal closeModal={closeModal}>
 					<TodoForm onSaveClick={handleSaveClick} />
