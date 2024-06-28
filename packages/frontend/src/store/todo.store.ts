@@ -2,44 +2,182 @@ import { create } from 'zustand';
 import { todoService } from '~shared/services/todos.service';
 import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
 
-type queryInfoT = {
+export type queryInfoT = {
 	searchQuery?: string | undefined;
 	isPrivate?: boolean | undefined;
 	isCompleted?: boolean | undefined;
+	page?: number;
+	perPage?: number;
 };
 
 export type queryT = {
 	searchQuery: string | undefined;
 	isPrivate: boolean | undefined;
 	isCompleted: boolean | undefined;
+	page: number;
+	perPage: number;
 };
 
 interface ITodoStore {
 	todos: TodoT[];
+
 	todo: TodoT;
+
 	isEdited: boolean;
-	query: queryT;
+	isLoading: boolean;
 
-	setIsEditedTrue: () => void;
-	setIsEditedFalse: () => void;
-	setQuery: (query: queryInfoT) => void;
+	query: queryT | null;
 
-	getAllTodos: () => Promise<void>;
+	currentPage: number;
+	totalPages: number;
+	totalTodos: number;
+
+	getTodos: (query: queryT) => Promise<void>;
+	getTodosAcc: (query: queryT) => Promise<void>;
+	clearTodos: () => void;
+
 	getTodo: (id: number) => Promise<void>;
 	addTodo: (todo: addTodoT) => Promise<void>;
 	updateTodo: (id: number, todoInfo: updateTodoT) => Promise<void>;
 	deleteTodo: (id: number) => Promise<void>;
+
+	setQuery: (query: queryInfoT) => void;
+	setCurrentPage: (page: number) => void;
+
+	setIsEditedTrue: () => void;
+	setIsEditedFalse: () => void;
 }
 
 export const useTodoStore = create<ITodoStore>((set) => {
 	return {
 		todos: [],
+
 		todo: {} as TodoT,
+
 		isEdited: false,
-		query: {
-			searchQuery: null,
-			isPrivate: undefined,
-			isCompleted: undefined,
+		isLoading: false,
+
+		query: null,
+
+		currentPage: 1,
+		totalPages: 0,
+		totalTodos: 0,
+
+		getTodos: async (query: queryT): Promise<void> => {
+			set({ isLoading: true });
+			try {
+				const todosObject = await todoService.getAllTodos(query);
+				set(() => ({
+					isLoading: false,
+					todos: todosObject.todos,
+
+					totalPages: todosObject.totalPages,
+					currentPage: todosObject.currentPage,
+					totalTodos: todosObject.totalTodos,
+				}));
+			} catch (error) {
+				set({ isLoading: false });
+			}
+		},
+
+		getTodosAcc: async (query: queryT): Promise<void> => {
+			set({ isLoading: true });
+			try {
+				const todosObject = await todoService.getAllTodos(query);
+				set((state) => ({
+					isLoading: false,
+					todos: [...state.todos, ...todosObject.todos],
+
+					totalPages: todosObject.totalPages,
+					currentPage: todosObject.currentPage,
+					totalTodos: todosObject.totalTodos,
+				}));
+			} catch (error) {
+				set({ isLoading: false });
+			}
+		},
+
+		clearTodos: (): void => {
+			set(() => ({
+				todos: [],
+				currentPage: 1,
+				totalPages: 0,
+				totalTodos: 0,
+			}));
+		},
+
+		getTodo: async (id: number): Promise<void> => {
+			set({ isLoading: true });
+			try {
+				const todo = await todoService.getOneTodo(id);
+				set(() => ({
+					isLoading: false,
+					todo,
+				}));
+			} catch (error) {
+				set({ isLoading: false });
+			}
+		},
+
+		addTodo: async (todo: addTodoT): Promise<void> => {
+			set({ isLoading: true });
+			try {
+				const newTodo = await todoService.addTodo(todo);
+				set((state) => ({
+					isLoading: false,
+					todos: [...state.todos, newTodo],
+				}));
+			} catch (error) {
+				set({ isLoading: false });
+			}
+		},
+
+		updateTodo: async (
+			id: number,
+			todoInfo: updateTodoT,
+		): Promise<void> => {
+			set({ isLoading: true });
+			try {
+				const updatedTodo = await todoService.updateTodo(id, todoInfo);
+				set((state) => {
+					const updatedTodos = state.todos.map((todo) =>
+						todo.id === id ? updatedTodo : todo,
+					);
+					return {
+						isLoading: false,
+						todos: updatedTodos,
+					};
+				});
+			} catch (error) {
+				set({ isLoading: false });
+			}
+		},
+
+		deleteTodo: async (id: number): Promise<void> => {
+			set({ isLoading: true });
+			try {
+				await todoService.deleteTodo(id);
+				set((state) => ({
+					isLoading: false,
+					todos: state.todos.filter((todo) => todo.id !== id),
+				}));
+			} catch (error) {
+				set({ isLoading: false });
+			}
+		},
+
+		setQuery: (query: queryInfoT): void => {
+			set((state) => ({
+				query: { ...state.query, ...query },
+			}));
+		},
+
+		setCurrentPage: (page: number): void => {
+			set(() => {
+				return {
+					currentPage: page,
+				};
+			});
 		},
 
 		setIsEditedTrue: (): void => {
@@ -54,70 +192,6 @@ export const useTodoStore = create<ITodoStore>((set) => {
 			set(() => {
 				return {
 					isEdited: false,
-				};
-			});
-		},
-
-		setQuery: (queryInfo: queryInfoT): void => {
-			set((state) => ({
-				query: {
-					...state.query,
-					...queryInfo,
-				},
-			}));
-		},
-
-		getAllTodos: async (): Promise<void> => {
-			const { query } = useTodoStore.getState();
-
-			const todos = await todoService.getAllTodos(query);
-
-			set(() => {
-				return {
-					todos,
-				};
-			});
-		},
-
-		getTodo: async (id: number): Promise<void> => {
-			const todo = await todoService.getOneTodo(id);
-			set(() => {
-				return {
-					todo,
-				};
-			});
-		},
-
-		addTodo: async (todo: addTodoT): Promise<void> => {
-			const newTodo = await todoService.addTodo(todo);
-
-			set((state) => ({
-				todos: [...state.todos, newTodo],
-			}));
-		},
-
-		updateTodo: async (
-			id: number,
-			todoInfo: updateTodoT,
-		): Promise<void> => {
-			const updatedTodo = await todoService.updateTodo(id, todoInfo);
-
-			set((state) => {
-				const updatedTodos = state.todos.map((todo) =>
-					todo.id === id ? updatedTodo : todo,
-				);
-				return {
-					todos: updatedTodos,
-				};
-			});
-		},
-
-		deleteTodo: async (id: number): Promise<void> => {
-			await todoService.deleteTodo(id);
-
-			set((state) => {
-				return {
-					todos: state.todos.filter((todo) => todo.id !== id),
 				};
 			});
 		},

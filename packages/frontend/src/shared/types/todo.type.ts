@@ -29,8 +29,24 @@ export type updateTodoT = {
 	isPrivate?: boolean;
 };
 
-export type TodosPropsT = {
+export type MobileTodosPropsT = {
 	todos: TodoT[];
+	currentPage: number;
+	totalPages: number;
+
+	incrementPage: () => void;
+};
+
+export type TabletTodosPropsT = {
+	todos: TodoT[];
+	isLastPage: boolean;
+
+	incrementPage: () => void;
+};
+
+export type DesktopTodosPropsT = {
+	todos: TodoT[];
+	totalPages: number;
 };
 
 export type TodoPropsT = {
@@ -91,4 +107,12 @@ export type RadioFieldProps = {
 
 export type queryFormikT = {
 	searchQuery: string;
+};
+
+export type TodosObjectT = {
+	todos: TodoT[];
+	totalPages: number;
+	currentPage: number;
+	perPage: number;
+	totalTodos: number;
 };

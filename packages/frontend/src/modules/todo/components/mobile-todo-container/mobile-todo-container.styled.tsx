@@ -23,3 +23,8 @@ export const listStyled = css`
 export const addTodoButton = css`
 	margin-bottom: 20px;
 `;
+
+export const noTodosStyled = css`
+	margin-top: 100px;
+	text-align: center;
+`;

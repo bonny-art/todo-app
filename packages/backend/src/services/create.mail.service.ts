@@ -6,8 +6,6 @@ import { EmailLetterT } from '@/types/auth.type';
 
 import { URLS } from '@/constants/url.constants';
 
-
-
 export default class CreateEmailService {
 	private static makeVerificationEmailHtml(path: string): string {
 		return emailVerification(path);

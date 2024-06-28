@@ -14,6 +14,33 @@ export default class TodoService {
 		return todos;
 	}
 
+	async countAllTodosForUser(
+		userId: number,
+		queryInfo: queryInfoT,
+	): Promise<number> {
+		const isPrivate = convertToBoolean(queryInfo.isPrivate);
+		const isCompleted = convertToBoolean(queryInfo.isCompleted);
+		const searchQuery = queryInfo.searchQuery;
+
+		const todosNumber = await client.todo.count({
+			where: {
+				AND: [
+					{ title: searchQuery },
+					{ isCompleted: isCompleted },
+					{ isPrivate: isPrivate },
+					{
+						OR: [{ userId }, { isPrivate: false }],
+					},
+				],
+			},
+			orderBy: {
+				createdAt: 'asc',
+			},
+		});
+
+		return todosNumber;
+	}
+
 	async getAllTodosForUser(
 		userId: number,
 		queryInfo: queryInfoT,
@@ -21,6 +48,11 @@ export default class TodoService {
 		const isPrivate = convertToBoolean(queryInfo.isPrivate);
 		const isCompleted = convertToBoolean(queryInfo.isCompleted);
 		const searchQuery = queryInfo.searchQuery;
+		const perPage = Number(queryInfo.perPage);
+		const currentPage = Number(queryInfo.page);
+
+		const skip = (currentPage - 1) * perPage;
+		const take = perPage;
 
 		const todos = await client.todo.findMany({
 			where: {
@@ -33,6 +65,11 @@ export default class TodoService {
 					},
 				],
 			},
+			orderBy: {
+				createdAt: 'asc',
+			},
+			skip,
+			take,
 		});
 
 		return todos;

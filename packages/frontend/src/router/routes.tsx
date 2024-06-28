@@ -15,7 +15,7 @@ const RecoverPasswordPage = React.lazy(
 	() => import('../modules/user/recover-password-page'),
 );
 
-const TodosPage = React.lazy(() => import('../modules/todo/todo-page'));
+const TodoPage = React.lazy(() => import('../modules/todo/todo-page'));
 const ProfilePage = React.lazy(() => import('../modules/user/profile-page'));
 
 export const publicRoutes = (): JSX.Element => {
@@ -49,7 +49,7 @@ export const publicRoutes = (): JSX.Element => {
 export const privateRoutes = (): JSX.Element => {
 	return (
 		<>
-			<Route path={ROUTER_KEYS.DASHBOARD} element={<TodosPage />} />,
+			<Route path={ROUTER_KEYS.DASHBOARD} element={<TodoPage />} />,
 			<Route path={ROUTER_KEYS.PROFILE} element={<ProfilePage />} />
 		</>
 	);

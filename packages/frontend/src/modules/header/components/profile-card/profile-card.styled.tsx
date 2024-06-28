@@ -24,6 +24,10 @@ export const container = css`
 	.switch {
 		margin-bottom: 10px;
 		font-family: ${fonts.inter};
+
+		&.bp5-control.bp5-disabled {
+			cursor: default;
+		}
 	}
 
 	button {
