@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { todoService } from '~shared/services/todos.service';
+
 import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
 
 export type queryInfoT = {

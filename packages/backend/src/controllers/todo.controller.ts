@@ -1,8 +1,9 @@
 import { Response, Request } from 'express';
-import TodoService from '@/services/todo.service';
+
 import { TodoCreateDataT, TodoUpdateDataT } from '@/types/todos.type';
-import HttpError from '@/helpers/HttpError';
+import HttpError from '../helpers/HttpError';
 import { User } from '@prisma/client';
+import TodoService from '@/services/todo.service';
 
 export class TodoController {
 	constructor(private todoService: TodoService) {}

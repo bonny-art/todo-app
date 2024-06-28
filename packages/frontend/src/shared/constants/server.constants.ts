@@ -1,5 +1,6 @@
 export const API_CONFIG = {
-	BASE_URL: 'http://localhost:3030',
+	// BASE_URL: 'http://localhost:3030',
+	BASE_URL: 'https://todo-api-2oj8.onrender.com',
 	TODOS_ENDPOINT: '/todos',
 	USERS_ENDPOINT: '/user',
 };
