@@ -1,6 +1,7 @@
 {
 	"typeRoots": ["@types/node", "./src/types"],
 	"compilerOptions": {
+		"rootDir": "./src",
 		"strict": true,
 		"module": "CommonJS",
 		"declaration": true,
@@ -15,10 +16,10 @@
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"outDir": "./dist",
-		"baseUrl": ".",
+		"baseUrl": "./src",
 		"noImplicitAny": true,
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["*"]
 		}
 	},
 	"include": ["src/**/*"],

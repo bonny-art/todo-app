@@ -2,7 +2,7 @@
 	"name": "todo-api",
 	"version": "1.0.0",
 	"scripts": {
-		"build": "rimraf build && npx tsc",
+		"build": "rimraf build && npx tsc && tsc-alias",
 		"prestart": "npm run prisma:migrate && npm run prisma:generate && npm run build",
 		"start": "concurrently \"tsc -w\" \"tsc-alias -w\" \"node dist/app.js\"",
 		"prisma:generate": "npx prisma generate",
