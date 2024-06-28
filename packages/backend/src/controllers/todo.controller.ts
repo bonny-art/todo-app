@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 
 import { TodoCreateDataT, TodoUpdateDataT } from '@/types/todos.type';
-import HttpError from '../helpers/HttpError';
+import HttpError from '@/helpers/HttpError';
 import { User } from '@prisma/client';
 import TodoService from '@/services/todo.service';
 
