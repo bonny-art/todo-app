@@ -4,7 +4,9 @@ import {
 } from '@/email-templates/email-templates';
 import { EmailLetterT } from '@/types/auth.type';
 
-const { FRONTEND_URL } = process.env;
+import { URLS } from '@/constants/url.constants';
+
+
 
 export default class CreateEmailService {
 	private static makeVerificationEmailHtml(path: string): string {
@@ -19,7 +21,7 @@ export default class CreateEmailService {
 		email: string,
 		token: string,
 	): EmailLetterT {
-		const path = `${FRONTEND_URL}/verify-email/${token}`;
+		const path = `${URLS.FRONTEND_URL}/verify-email/${token}`;
 		const content = this.makeVerificationEmailHtml(path);
 
 		return {
@@ -33,7 +35,7 @@ export default class CreateEmailService {
 		email: string,
 		token: string,
 	): EmailLetterT {
-		const path = `${FRONTEND_URL}/recover-password/${token}`;
+		const path = `${URLS.FRONTEND_URL}/recover-password/${token}`;
 		const content = this.makeRecoveryEmailHtml(path);
 
 		return {
