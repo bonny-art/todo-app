@@ -3190,6 +3190,11 @@ normalize.css@^8.0.1:
   resolved "https://registry.npmjs.org/normalize.css/-/normalize.css-8.0.1.tgz"
   integrity sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==
 
+notiflix@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.npmjs.org/notiflix/-/notiflix-3.2.7.tgz"
+  integrity sha512-NRu6KSeyfphgPKBxh4IUoOYXbROrpuDa9/q9/VPb6UNEP4uII9RKwclTZWUyl1A0tSh9+lEhdz9F/EkskH3A6w==
+
 object-assign@^4, object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz"
@@ -4174,7 +4179,9 @@ to-regex-range@^5.0.1:
     passport-jwt "^4.0.1"
     passport-local "^1.0.0"
     password "^0.1.1"
+    prisma "^5.0.0"
     rimraf "^5.0.5"
+    tsconfig-paths "^4.2.0"
 
 toidentifier@1.0.1:
   version "1.0.1"

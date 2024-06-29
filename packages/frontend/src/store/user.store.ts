@@ -10,6 +10,7 @@ import {
 	recoverPasswordT,
 	registerUserT,
 } from '~shared/types/user.type';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 interface IUserStore {
 	user: UserT | null;
@@ -80,7 +81,7 @@ export const useUserStore = create<IUserStore>()(
 						user: null,
 						token: '',
 					}));
-					alert('Invalid email or password');
+					Notify.failure('Invalid email or password');
 				}
 			},
 

@@ -12,8 +12,10 @@ import {
 	input,
 	inputContainer,
 } from './forget-password-form.styled';
+import { useNavigate } from 'react-router-dom';
 
 const ForgetPasswordForm = (): JSX.Element => {
+	const navigate = useNavigate();
 	const userStore = useUserStore();
 
 	const initialValues = {
@@ -25,6 +27,8 @@ const ForgetPasswordForm = (): JSX.Element => {
 		actions: FormikHelpers<emailUserT>,
 	): void => {
 		userStore.sendRecoveryEmail(values);
+
+		navigate('/');
 
 		actions.setSubmitting(false);
 	};
