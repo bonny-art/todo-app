@@ -14,10 +14,17 @@ export const container = css`
 
 	padding: 20px;
 
-	& a.bp5-button {
+	& a:hover {
+		text-decoration: none;
+	}
+
+	& button.bp5-button {
+		display: block;
+		width: 100%;
 		font-family: ${fonts.interBold};
 		font-size: 24px;
 		color: ${colors.darkGunmetal};
+		text-align: center;
 
 		&:focus {
 			outline: none;

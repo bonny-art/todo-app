@@ -25,7 +25,12 @@ export default class TodoService {
 		const todosNumber = await client.todo.count({
 			where: {
 				AND: [
-					{ title: searchQuery },
+					{
+						OR: [
+							{ title: { contains: searchQuery } },
+							{ description: { contains: searchQuery } },
+						],
+					},
 					{ isCompleted: isCompleted },
 					{ isPrivate: isPrivate },
 					{
