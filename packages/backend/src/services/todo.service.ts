@@ -27,8 +27,18 @@ export default class TodoService {
 				AND: [
 					{
 						OR: [
-							{ title: { contains: searchQuery } },
-							{ description: { contains: searchQuery } },
+							{
+								title: {
+									contains: searchQuery,
+									mode: 'insensitive',
+								},
+							},
+							{
+								description: {
+									contains: searchQuery,
+									mode: 'insensitive',
+								},
+							},
 						],
 					},
 					{ isCompleted: isCompleted },
@@ -62,7 +72,22 @@ export default class TodoService {
 		const todos = await client.todo.findMany({
 			where: {
 				AND: [
-					{ title: searchQuery },
+					{
+						OR: [
+							{
+								title: {
+									contains: searchQuery,
+									mode: 'insensitive',
+								},
+							},
+							{
+								description: {
+									contains: searchQuery,
+									mode: 'insensitive',
+								},
+							},
+						],
+					},
 					{ isCompleted: isCompleted },
 					{ isPrivate: isPrivate },
 					{
