@@ -30,18 +30,20 @@ const RecoverPasswordForm = (): JSX.Element => {
 		repeatPassword: '',
 	};
 
-	const handleSubmit = (
+	const handleSubmit = async (
 		values: recoverPasswordFormikT,
 		actions: FormikHelpers<recoverPasswordFormikT>,
-	): void => {
+	): Promise<void> => {
 		const userInfo = {
 			token: token,
 			password: values.password,
 		};
 
-		userStore.recoverPassword(userInfo);
+		try {
+			await userStore.recoverPassword(userInfo);
 
-		navigate(ROUTER_KEYS.LOGIN);
+			navigate(ROUTER_KEYS.LOGIN);
+		} catch (error) {}
 
 		actions.setSubmitting(false);
 	};

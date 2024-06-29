@@ -168,7 +168,6 @@ export const useUserStore = create<IUserStore>()(
 						user: null,
 						isLoading: false,
 					}));
-					Notify.failure(getErrorMessage(error));
 				}
 			},
 

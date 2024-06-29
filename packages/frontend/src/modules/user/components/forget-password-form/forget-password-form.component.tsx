@@ -23,13 +23,15 @@ const ForgetPasswordForm = (): JSX.Element => {
 		email: '',
 	};
 
-	const handleSubmit = (
+	const handleSubmit = async (
 		values: emailUserT,
 		actions: FormikHelpers<emailUserT>,
-	): void => {
-		userStore.sendRecoveryEmail(values);
+	): Promise<void> => {
+		try {
+			await userStore.sendRecoveryEmail(values);
 
-		navigate(ROUTER_KEYS.HOME);
+			navigate(ROUTER_KEYS.HOME);
+		} catch (error) {}
 
 		actions.setSubmitting(false);
 	};

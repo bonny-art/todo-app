@@ -8,7 +8,11 @@ import PasswordEyeButton from '~shared/components/password-eye-button/password-e
 import { registerUserFormikT } from '~shared/types/user.type';
 import { container, input, inputContainer } from './register-form.styled';
 
+import { ROUTER_KEYS } from '~shared/keys';
+import { useNavigate } from 'react-router-dom';
+
 const RegisterForm = (): JSX.Element => {
+	const navigate = useNavigate();
 	const userStore = useUserStore();
 
 	const [showPassword, setShowPassword] = useState(false);
@@ -24,17 +28,21 @@ const RegisterForm = (): JSX.Element => {
 		repeatPassword: '',
 	};
 
-	const handleSubmit = (
+	const handleSubmit = async (
 		values: registerUserFormikT,
 		actions: FormikHelpers<registerUserFormikT>,
-	): void => {
+	): Promise<void> => {
 		const userInfo = {
 			name: values.name,
 			email: values.email,
 			password: values.password,
 		};
 
-		userStore.registerUser(userInfo);
+		try {
+			await userStore.registerUser(userInfo);
+
+			navigate(ROUTER_KEYS.HOME);
+		} catch (error) {}
 
 		actions.setSubmitting(false);
 	};
