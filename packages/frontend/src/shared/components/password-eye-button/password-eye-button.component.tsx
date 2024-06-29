@@ -13,6 +13,7 @@ const PasswordEyeButton = ({
 }: PasswordEyeButtonProps): JSX.Element => {
 	return (
 		<button
+			type="button"
 			className={PasswordEyeButtonStyled}
 			onClick={handleTogglePassword}
 		>

@@ -8,6 +8,7 @@ import { loginValidationSchema } from '~shared/yup.schemas/user-yup.schemas';
 
 import PasswordEyeButton from '~shared/components/password-eye-button/password-eye-button.component';
 import { useUserStore } from '~store/user.store';
+import { Notify } from 'notiflix';
 
 const LoginForm = (): JSX.Element => {
 	const userStore = useUserStore();
@@ -28,6 +29,8 @@ const LoginForm = (): JSX.Element => {
 		actions: FormikHelpers<loginUserFormikT>,
 	): void => {
 		userStore.loginUser(values);
+
+		Notify.success('You have been logged in successfully');
 
 		actions.setSubmitting(false);
 	};

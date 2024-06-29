@@ -1,3 +1,4 @@
+import { Notify } from 'notiflix';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTER_KEYS } from '~shared/keys';
@@ -15,6 +16,10 @@ const EmailVerificationPage = (): JSX.Element => {
 				await userStore.verificateUser(token);
 
 				navigate(ROUTER_KEYS.LOGIN);
+
+				Notify.success(
+					'Your account has been verified successfully. You can now login.',
+				);
 			} catch (error) {
 				navigate(ROUTER_KEYS.REGISTER);
 			}
