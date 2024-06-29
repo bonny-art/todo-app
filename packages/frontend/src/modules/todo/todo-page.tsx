@@ -26,7 +26,7 @@ const TodoPage = (): JSX.Element => {
 		clearTodos,
 		setQuery,
 	} = todoStore;
-	const previousQurey = useRef<queryInfoT>();
+	const previousQuery = useRef<queryInfoT>();
 
 	const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 	const isTablet = useMediaQuery({
@@ -36,21 +36,24 @@ const TodoPage = (): JSX.Element => {
 
 	const hasQueryFilterChanged = (query: queryInfoT): boolean => {
 		return (
-			query.isCompleted !== previousQurey.current?.isCompleted ||
-			query.isPrivate !== previousQurey.current?.isPrivate ||
-			query.searchQuery !== previousQurey.current?.searchQuery
+			query.isCompleted !== previousQuery.current?.isCompleted ||
+			query.isPrivate !== previousQuery.current?.isPrivate ||
+			query.searchQuery !== previousQuery.current?.searchQuery
 		);
 	};
 
 	useEffect(() => {
-		const searchQuery = searchParams.get('searchQuery');
+		const searchQuery = searchParams.get('searchQuery') || '';
 		const isPrivate = convertToBoolean(searchParams.get('isPrivate'));
 		const isCompleted = convertToBoolean(searchParams.get('isCompleted'));
+		const page = Number(searchParams.get('page')) || 1;
+
 		setQuery({
 			searchQuery,
 			isPrivate,
 			isCompleted,
 			perPage: ITEMS_PER_PAGE,
+			page,
 		});
 	}, []);
 
@@ -62,17 +65,19 @@ const TodoPage = (): JSX.Element => {
 		if (hasQueryFilterChanged(query)) {
 			clearTodos();
 			const newQuery = { ...query, page: 1 };
-			previousQurey.current = newQuery;
+			previousQuery.current = newQuery;
 			setQuery(newQuery);
 			return;
 		}
 
-		previousQurey.current = query;
+		previousQuery.current = query;
+
 		setSearchParams(
 			convertToSearchParams({
 				searchQuery: query.searchQuery,
 				isPrivate: query.isPrivate,
 				isCompleted: query.isCompleted,
+				page: query.page,
 			}),
 		);
 
