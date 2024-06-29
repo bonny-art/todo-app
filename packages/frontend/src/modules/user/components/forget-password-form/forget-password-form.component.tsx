@@ -14,7 +14,6 @@ import {
 } from './forget-password-form.styled';
 import { useNavigate } from 'react-router-dom';
 import { ROUTER_KEYS } from '~shared/keys';
-import { Notify } from 'notiflix';
 
 const ForgetPasswordForm = (): JSX.Element => {
 	const navigate = useNavigate();
@@ -31,7 +30,6 @@ const ForgetPasswordForm = (): JSX.Element => {
 		userStore.sendRecoveryEmail(values);
 
 		navigate(ROUTER_KEYS.HOME);
-		Notify.success('Password has been changed');
 
 		actions.setSubmitting(false);
 	};

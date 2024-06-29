@@ -11,6 +11,7 @@ import {
 	registerUserT,
 } from '~shared/types/user.type';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { getErrorMessage } from '~shared/helpers/error-message-getter';
 
 interface IUserStore {
 	user: UserT | null;
@@ -53,19 +54,45 @@ export const useUserStore = create<IUserStore>()(
 			},
 
 			registerUser: async (userInfo: registerUserT): Promise<void> => {
-				const user = await userService.registerUser(userInfo);
+				try {
+					const user = await userService.registerUser(userInfo);
 
-				set(() => ({
-					user,
-				}));
+					set(() => ({
+						user,
+					}));
+
+					Notify.success(
+						'You have been registered successfully. Please verify your email',
+					);
+				} catch (error) {
+					set(() => ({
+						user: null,
+						token: '',
+					}));
+
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 
 			verificateUser: async (token: string): Promise<void> => {
-				const user = await userService.verificateUser(token);
+				try {
+					const user = await userService.verificateUser(token);
 
-				set(() => ({
-					user,
-				}));
+					set(() => ({
+						user,
+					}));
+
+					Notify.success(
+						'Your account has been verified successfully. You can now login.',
+					);
+				} catch (error) {
+					set(() => ({
+						user: null,
+						token: '',
+					}));
+
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 
 			loginUser: async (userInfo: loginUserT): Promise<void> => {
@@ -76,27 +103,52 @@ export const useUserStore = create<IUserStore>()(
 						user: user.user,
 						token: user.token,
 					}));
+
+					Notify.success('You have successfully logged in');
 				} catch (error) {
 					set(() => ({
 						user: null,
 						token: '',
 					}));
-					Notify.failure('Invalid email or password');
+
+					Notify.failure(getErrorMessage(error));
 				}
 			},
 
 			sendRecoveryEmail: async (userInfo: emailUserT): Promise<void> => {
-				await userService.sendRecoveryEmail(userInfo);
+				try {
+					await userService.sendRecoveryEmail(userInfo);
+
+					Notify.success('Recovery email has been sent');
+				} catch (error) {
+					set(() => ({
+						user: null,
+						token: '',
+					}));
+
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 
 			recoverPassword: async (
 				userInfo: recoverPasswordT,
 			): Promise<void> => {
-				const user = await userService.recoverPassword(userInfo);
+				try {
+					const user = await userService.recoverPassword(userInfo);
 
-				set(() => ({
-					user,
-				}));
+					set(() => ({
+						user,
+					}));
+
+					Notify.success('Password has been changed successfully');
+				} catch (error) {
+					set(() => ({
+						user: null,
+						token: '',
+					}));
+
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 
 			authByToken: async (): Promise<void> => {
@@ -116,34 +168,58 @@ export const useUserStore = create<IUserStore>()(
 						user: null,
 						isLoading: false,
 					}));
+					Notify.failure(getErrorMessage(error));
 				}
 			},
 
 			changePassword: async (
 				userInfo: changePasswordT,
 			): Promise<void> => {
-				const user = await userService.changePassword(userInfo);
+				try {
+					const user = await userService.changePassword(userInfo);
 
-				set(() => ({
-					user,
-				}));
+					set(() => ({
+						user,
+					}));
+
+					Notify.success('Password has been changed successfully');
+				} catch (error) {
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 
 			changeName: async (userInfo: NameUserT): Promise<void> => {
-				const user = await userService.changeName(userInfo);
+				try {
+					const user = await userService.changeName(userInfo);
 
-				set(() => ({
-					user,
-				}));
+					set(() => ({
+						user,
+					}));
+
+					Notify.success('Name has been changed successfully');
+				} catch (error) {
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 
 			logoutUser: async (): Promise<void> => {
-				await userService.logoutUser();
+				try {
+					await userService.logoutUser();
 
-				set(() => ({
-					user: null,
-					token: '',
-				}));
+					set(() => ({
+						user: null,
+						token: '',
+					}));
+
+					Notify.success('You have been logged out');
+				} catch (error) {
+					set(() => ({
+						user: null,
+						token: '',
+					}));
+
+					Notify.failure(getErrorMessage(error));
+				}
 			},
 		}),
 		{

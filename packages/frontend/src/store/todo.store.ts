@@ -1,4 +1,6 @@
+import { Notify } from 'notiflix';
 import { create } from 'zustand';
+import { getErrorMessage } from '~shared/helpers/error-message-getter';
 import { todoService } from '~shared/services/todos.service';
 
 import { TodoT, addTodoT, updateTodoT } from '~shared/types/todo.type';
@@ -78,6 +80,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 				}));
 			} catch (error) {
 				set({ isLoading: false });
+				Notify.failure(getErrorMessage(error));
 			}
 		},
 
@@ -95,6 +98,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 				}));
 			} catch (error) {
 				set({ isLoading: false });
+				Notify.failure(getErrorMessage(error));
 			}
 		},
 
@@ -117,6 +121,7 @@ export const useTodoStore = create<ITodoStore>((set) => {
 				}));
 			} catch (error) {
 				set({ isLoading: false });
+				Notify.failure(getErrorMessage(error));
 			}
 		},
 
@@ -128,8 +133,11 @@ export const useTodoStore = create<ITodoStore>((set) => {
 					isLoading: false,
 					todos: [...state.todos, newTodo],
 				}));
+
+				Notify.success('Todo added successfully');
 			} catch (error) {
 				set({ isLoading: false });
+				Notify.failure(getErrorMessage(error));
 			}
 		},
 
@@ -149,8 +157,11 @@ export const useTodoStore = create<ITodoStore>((set) => {
 						todos: updatedTodos,
 					};
 				});
+
+				Notify.success('Todo updated successfully');
 			} catch (error) {
 				set({ isLoading: false });
+				Notify.failure(getErrorMessage(error));
 			}
 		},
 
@@ -162,8 +173,11 @@ export const useTodoStore = create<ITodoStore>((set) => {
 					isLoading: false,
 					todos: state.todos.filter((todo) => todo.id !== id),
 				}));
+
+				Notify.success('Todo deleted successfully');
 			} catch (error) {
 				set({ isLoading: false });
+				Notify.failure(getErrorMessage(error));
 			}
 		},
 

@@ -15,7 +15,6 @@ import { TextareaField } from '~shared/components/text-area-field/text-area-fiel
 import { RadioInputGroup } from '~shared/components/radio-input-group/radio-input-group.component';
 import { todoValidationSchema } from '~shared/yup.schemas/todo-yup.schemas';
 import { useUserStore } from '~store/user.store';
-import { Notify } from 'notiflix';
 
 const TodoForm = ({ todo, onSaveClick }: TodoFormProps): JSX.Element => {
 	const userStore = useUserStore();
@@ -45,8 +44,6 @@ const TodoForm = ({ todo, onSaveClick }: TodoFormProps): JSX.Element => {
 		} else {
 			onSaveClick(newTodo);
 		}
-
-		Notify.success('Todo has been saved');
 
 		actions.setSubmitting(false);
 	};

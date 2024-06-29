@@ -13,7 +13,6 @@ import {
 } from './recover-password-form.styled';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTER_KEYS } from '~shared/keys';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const RecoverPasswordForm = (): JSX.Element => {
 	const navigate = useNavigate();
@@ -43,7 +42,6 @@ const RecoverPasswordForm = (): JSX.Element => {
 		userStore.recoverPassword(userInfo);
 
 		navigate(ROUTER_KEYS.LOGIN);
-		Notify.success('Password has been changed');
 
 		actions.setSubmitting(false);
 	};

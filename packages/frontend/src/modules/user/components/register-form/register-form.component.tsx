@@ -7,7 +7,6 @@ import { useUserStore } from '~store/user.store';
 import PasswordEyeButton from '~shared/components/password-eye-button/password-eye-button.component';
 import { registerUserFormikT } from '~shared/types/user.type';
 import { container, input, inputContainer } from './register-form.styled';
-import { Notify } from 'notiflix';
 
 const RegisterForm = (): JSX.Element => {
 	const userStore = useUserStore();
@@ -36,10 +35,6 @@ const RegisterForm = (): JSX.Element => {
 		};
 
 		userStore.registerUser(userInfo);
-
-		Notify.success(
-			'You have been registered successfully. Please verify your email.',
-		);
 
 		actions.setSubmitting(false);
 	};
