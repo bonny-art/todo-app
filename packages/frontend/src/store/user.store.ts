@@ -22,11 +22,11 @@ interface IUserStore {
 	setIsEditedTrue: () => void;
 	setIsEditedFalse: () => void;
 
-	registerUser: (userInfo: registerUserT) => Promise<void>;
-	verificateUser: (token: string) => Promise<void>;
+	registerUser: (userInfo: registerUserT) => Promise<boolean>;
+	verificateUser: (token: string) => Promise<boolean>;
 	loginUser: (userInfo: loginUserT) => Promise<void>;
-	sendRecoveryEmail: (userInfo: emailUserT) => Promise<void>;
-	recoverPassword: (userInfo: recoverPasswordT) => Promise<void>;
+	sendRecoveryEmail: (userInfo: emailUserT) => Promise<boolean>;
+	recoverPassword: (userInfo: recoverPasswordT) => Promise<boolean>;
 	authByToken: () => Promise<void>;
 	changePassword: (userInfo: changePasswordT) => void;
 	changeName: (userInfo: NameUserT) => void;
@@ -53,7 +53,7 @@ export const useUserStore = create<IUserStore>()(
 				});
 			},
 
-			registerUser: async (userInfo: registerUserT): Promise<void> => {
+			registerUser: async (userInfo: registerUserT): Promise<boolean> => {
 				try {
 					const user = await userService.registerUser(userInfo);
 
@@ -64,6 +64,8 @@ export const useUserStore = create<IUserStore>()(
 					Notify.success(
 						'You have been registered successfully. Please verify your email',
 					);
+
+					return true;
 				} catch (error) {
 					set(() => ({
 						user: null,
@@ -71,10 +73,12 @@ export const useUserStore = create<IUserStore>()(
 					}));
 
 					Notify.failure(getErrorMessage(error));
+
+					return false;
 				}
 			},
 
-			verificateUser: async (token: string): Promise<void> => {
+			verificateUser: async (token: string): Promise<boolean> => {
 				try {
 					const user = await userService.verificateUser(token);
 
@@ -85,6 +89,8 @@ export const useUserStore = create<IUserStore>()(
 					Notify.success(
 						'Your account has been verified successfully. You can now login.',
 					);
+
+					return true;
 				} catch (error) {
 					set(() => ({
 						user: null,
@@ -92,6 +98,8 @@ export const useUserStore = create<IUserStore>()(
 					}));
 
 					Notify.failure(getErrorMessage(error));
+
+					return false;
 				}
 			},
 
@@ -115,11 +123,15 @@ export const useUserStore = create<IUserStore>()(
 				}
 			},
 
-			sendRecoveryEmail: async (userInfo: emailUserT): Promise<void> => {
+			sendRecoveryEmail: async (
+				userInfo: emailUserT,
+			): Promise<boolean> => {
 				try {
 					await userService.sendRecoveryEmail(userInfo);
 
 					Notify.success('Recovery email has been sent');
+
+					return true;
 				} catch (error) {
 					set(() => ({
 						user: null,
@@ -127,12 +139,14 @@ export const useUserStore = create<IUserStore>()(
 					}));
 
 					Notify.failure(getErrorMessage(error));
+
+					return false;
 				}
 			},
 
 			recoverPassword: async (
 				userInfo: recoverPasswordT,
-			): Promise<void> => {
+			): Promise<boolean> => {
 				try {
 					const user = await userService.recoverPassword(userInfo);
 
@@ -141,6 +155,8 @@ export const useUserStore = create<IUserStore>()(
 					}));
 
 					Notify.success('Password has been changed successfully');
+
+					return true;
 				} catch (error) {
 					set(() => ({
 						user: null,
@@ -148,6 +164,8 @@ export const useUserStore = create<IUserStore>()(
 					}));
 
 					Notify.failure(getErrorMessage(error));
+
+					return false;
 				}
 			},
 

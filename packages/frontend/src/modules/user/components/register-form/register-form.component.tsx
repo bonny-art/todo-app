@@ -38,11 +38,11 @@ const RegisterForm = (): JSX.Element => {
 			password: values.password,
 		};
 
-		try {
-			await userStore.registerUser(userInfo);
+		const isSuccessful = await userStore.registerUser(userInfo);
 
+		if (isSuccessful) {
 			navigate(ROUTER_KEYS.HOME);
-		} catch (error) {}
+		}
 
 		actions.setSubmitting(false);
 	};

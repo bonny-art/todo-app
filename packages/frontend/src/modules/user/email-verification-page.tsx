@@ -11,11 +11,11 @@ const EmailVerificationPage = (): JSX.Element => {
 
 	useEffect(() => {
 		const verifyUser = async (): Promise<void> => {
-			try {
-				await userStore.verificateUser(token);
+			const isSuccessful = await userStore.verificateUser(token);
 
-				navigate(ROUTER_KEYS.LOGIN);
-			} catch (error) {
+			if (isSuccessful) {
+				navigate(ROUTER_KEYS.HOME);
+			} else {
 				navigate(ROUTER_KEYS.REGISTER);
 			}
 		};

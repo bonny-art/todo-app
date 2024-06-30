@@ -39,11 +39,11 @@ const RecoverPasswordForm = (): JSX.Element => {
 			password: values.password,
 		};
 
-		try {
-			await userStore.recoverPassword(userInfo);
+		const isSuccessful = await userStore.recoverPassword(userInfo);
 
+		if (isSuccessful) {
 			navigate(ROUTER_KEYS.LOGIN);
-		} catch (error) {}
+		}
 
 		actions.setSubmitting(false);
 	};

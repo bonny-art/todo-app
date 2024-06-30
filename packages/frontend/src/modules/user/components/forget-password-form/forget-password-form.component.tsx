@@ -27,11 +27,11 @@ const ForgetPasswordForm = (): JSX.Element => {
 		values: emailUserT,
 		actions: FormikHelpers<emailUserT>,
 	): Promise<void> => {
-		try {
-			await userStore.sendRecoveryEmail(values);
+		const isSuccessful = await userStore.sendRecoveryEmail(values);
 
+		if (isSuccessful) {
 			navigate(ROUTER_KEYS.HOME);
-		} catch (error) {}
+		}
 
 		actions.setSubmitting(false);
 	};
